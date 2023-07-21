@@ -133,3 +133,8 @@ INSERT INTO EXAM VALUES('s21', 3, 8.2, 'P');
 INSERT INTO STUDENT VALUES('s0', '수강생', '20220331', 'M', '01000000005', 'm1');
 UPDATE STUDENT SET major_code= 'm2' where student_code= 's0';
 ```
+
+## DELETE
+``` sql
+DELETE FROM STUDENT WHERE student_code = 's0';
+```
