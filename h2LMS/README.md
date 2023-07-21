@@ -21,3 +21,14 @@ CREATE TABLE IF NOT EXISTS STUDENT
     foreign key (major_code) references MAJOR(major_code)
 )
 ```
+
+## EXAM TABLE
+```sql
+CREATE TABLE IF NOT EXISTS EXAM
+(
+    student_code varchar(100) primary key comment '수강생코드',
+    exam_seq int not null comment '시험주차',
+    score decimal(10, 2) not null comment '시험점수',
+    result varchar(1) not null comment '합격여부'
+);
+```
