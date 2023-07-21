@@ -145,3 +145,9 @@ SELECT * FROM STUDENT;
 SELECT * FROM STUDENT WHERE student_code = 's1';
 SELECT name, major_code FROM STUDENT WHERE student_code = 's1';
 ```
+
+## JOIN
+``` sql
+SELECT s.name, s.major_code, m.major_name
+FROM STUDENT s JOIN MAJOR m ON s.major_code = m.major_code;
+```
