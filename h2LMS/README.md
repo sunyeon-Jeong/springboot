@@ -45,3 +45,6 @@ ALTER TABLE EXAM ADD PRIMARY KEY (student_code, exam_seq);
 ALTER TABLE EXAM ADD CONSTRAINT exam_fk_student_code
     FOREIGN KEY (student_code) REFERENCES STUDENT (student_code);
 ```
+
+## ERD_2
+![img_4.png](img_4.png)
