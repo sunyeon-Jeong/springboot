@@ -60,3 +60,26 @@ INSERT INTO MAJOR VALUES('m6', '리엑트', '감자');
 INSERT INTO MAJOR VALUES('m7', '뷰', '콘');
 INSERT INTO MAJOR VALUES('m8', '엥귤러', '밍고');
 ```
+``` sql
+INSERT INTO STUDENT VALUES('s1', '가가가', '20220331', 'M', '01000000001', 'm1');
+INSERT INTO STUDENT VALUES('s2', '나나나', '20220501', 'M', '01000000002', 'm1');
+INSERT INTO STUDENT VALUES('s3', '다다다', '20220711', 'M', '01000000003', 'm1');
+INSERT INTO STUDENT VALUES('s4', '라라라', '20220408', 'M', '01000000004', 'm6');
+INSERT INTO STUDENT VALUES('s5', '마마마', '20220921', 'F', '01000000005', 'm6');
+INSERT INTO STUDENT VALUES('s6', '바바바', '20221111', 'M', '01000000006', 'm7');
+INSERT INTO STUDENT VALUES('s7', '사사사', '20221117', 'F', '01000000007', 'm8');
+INSERT INTO STUDENT VALUES('s8', '아아아', '20220623', 'F', '01000000008', 'm6');
+INSERT INTO STUDENT VALUES('s9', '자자자', '20220511', 'M', '01000000009', 'm2');
+INSERT INTO STUDENT VALUES('s10', '차차차', '20220504', 'F', '01000000010', 'm8');
+INSERT INTO STUDENT VALUES('s11', '카카카', '20220222', 'M', '01000000020', 'm2');
+INSERT INTO STUDENT(student_code, name, gender, major_code) VALUES('s12', '타타타', 'M', 'm3');
+INSERT INTO STUDENT VALUES('s13', '파파파', '20220121', 'F', '01000000030', 'm1');
+INSERT INTO STUDENT(student_code, name, gender, major_code) VALUES('s14', '하하하', 'M', 'm4');
+INSERT INTO STUDENT VALUES('s15', '기기기', '20221101', 'F', '01000000040', 'm1');
+INSERT INTO STUDENT(student_code, name, birth, gender, phone, major_code) VALUES('s16', '니니니', '20221105', 'M', '01000000050', 'm5');
+INSERT INTO STUDENT(student_code, name, gender, major_code) VALUES('s17', '디디디', 'F', 'm7');
+INSERT INTO STUDENT(student_code, name, birth, gender, phone, major_code) VALUES('s18', '리리리', '20220508', 'M', '01000000060', 'm6');
+INSERT INTO STUDENT VALUES('s19', '미미미', '20220505', 'F', '01000000070', 'm2');
+INSERT INTO STUDENT VALUES('s20', '비비비', '20220909', 'M', '01000000080', 'm3');
+INSERT INTO STUDENT VALUES('s21', '시시시', '20220303', 'F', '01000000090', 'm6');
+```
