@@ -26,12 +26,22 @@ CREATE TABLE IF NOT EXISTS STUDENT
 ``` sql
 CREATE TABLE IF NOT EXISTS EXAM
 (
-    student_code varchar(100) comment '수강생코드',
+    student_code varchar(100) not null comment '수강생코드',
     exam_seq int not null comment '시험주차',
     score decimal(10, 2) not null comment '시험점수',
     result varchar(1) not null comment '합격여부'
 );
 ```
 
-## ERD
+## ERD_1
 ![img_1.png](img_1.png)
+
+## ALTER
+- EXAM 테이블 PK 복합설계 (데이터중복 막음)
+- EXAM 테이블 FK 설계 (student_code)
+``` sql
+ALTER TABLE EXAM ADD PRIMARY KEY (student_code, exam_seq);
+
+ALTER TABLE EXAM ADD CONSTRAINT exam_fk_student_code
+    FOREIGN KEY (student_code) REFERENCES STUDENT (student_code);
+```
