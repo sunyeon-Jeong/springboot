@@ -23,12 +23,15 @@ CREATE TABLE IF NOT EXISTS STUDENT
 ```
 
 ## EXAM TABLE
-```sql
+``` sql
 CREATE TABLE IF NOT EXISTS EXAM
 (
-    student_code varchar(100) primary key comment '수강생코드',
+    student_code varchar(100) comment '수강생코드',
     exam_seq int not null comment '시험주차',
     score decimal(10, 2) not null comment '시험점수',
     result varchar(1) not null comment '합격여부'
 );
 ```
+
+## ERD
+![img_1.png](img_1.png)
