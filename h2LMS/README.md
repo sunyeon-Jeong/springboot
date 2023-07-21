@@ -48,3 +48,15 @@ ALTER TABLE EXAM ADD CONSTRAINT exam_fk_student_code
 
 ## ERD_2
 ![img_2.png](img_2.png)
+
+## INSERT
+``` sql
+INSERT INTO MAJOR VALUES('m1', '스프링', '말랑이');
+INSERT INTO MAJOR VALUES('m2', '노드', '춘식이');
+INSERT INTO MAJOR VALUES('m3', '플라스크', '쿼카');
+INSERT INTO MAJOR VALUES('m4', '루비온레일즈', '루디');
+INSERT INTO MAJOR VALUES('m5', '라라벨', '라이언');
+INSERT INTO MAJOR VALUES('m6', '리엑트', '감자');
+INSERT INTO MAJOR VALUES('m7', '뷰', '콘');
+INSERT INTO MAJOR VALUES('m8', '엥귤러', '밍고');
+```
