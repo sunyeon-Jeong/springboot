@@ -47,4 +47,4 @@ ALTER TABLE EXAM ADD CONSTRAINT exam_fk_student_code
 ```
 
 ## ERD_2
-![img_4.png](img_4.png)
+![img_2.png](img_2.png)
