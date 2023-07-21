@@ -43,4 +43,4 @@ build.gradle
 gradlew
 gradlew.bat
 settings.gradle
-src/main/resources/application.properties
+src/resources/application.properties
