@@ -138,3 +138,10 @@ UPDATE STUDENT SET major_code= 'm2' where student_code= 's0';
 ``` sql
 DELETE FROM STUDENT WHERE student_code = 's0';
 ```
+
+## SELECT
+``` sql
+SELECT * FROM STUDENT;
+SELECT * FROM STUDENT WHERE student_code = 's1';
+SELECT name, major_code FROM STUDENT WHERE student_code = 's1';
+```
