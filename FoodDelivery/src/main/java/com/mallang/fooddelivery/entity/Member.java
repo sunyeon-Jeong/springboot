@@ -1,8 +1,10 @@
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 
+@Getter
 @Entity
 @NoArgsConstructor // class 모든필드 -> 기본생성자 자동추가
 public class Member {
