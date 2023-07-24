@@ -1,3 +1,5 @@
+package com.mallang.fooddelivery.entity;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
