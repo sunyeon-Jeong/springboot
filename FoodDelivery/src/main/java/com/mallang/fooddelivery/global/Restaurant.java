@@ -1,4 +1,4 @@
-package com.mallang.fooddelivery;
+package com.mallang.fooddelivery.global;
 
 import com.mallang.fooddelivery.entity.Food;
 import com.mallang.fooddelivery.entity.Member;
