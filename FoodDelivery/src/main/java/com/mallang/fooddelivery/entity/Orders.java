@@ -1,5 +1,6 @@
 package com.mallang.fooddelivery.entity;
 
+import com.mallang.fooddelivery.global.Timestamped;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -8,7 +9,7 @@ import javax.persistence.*;
 @Getter
 @Entity
 @NoArgsConstructor // class 모든필드 -> 기본생성자 자동추가
-public class Orders {
+public class Orders extends Timestamped {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) // PK생성 -> DB에 위임전략
     private Long id;
