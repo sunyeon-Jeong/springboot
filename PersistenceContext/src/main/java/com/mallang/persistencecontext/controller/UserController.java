@@ -2,7 +2,7 @@ package com.mallang.persistencecontext.controller;
 
 import com.mallang.persistencecontext.repository.UserRepository;
 import com.mallang.persistencecontext.service.UserService;
-import com.mallang.persistencecontext.entity.User;
+import com.mallang.persistencecontext.entity.Users;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -24,38 +24,38 @@ public class UserController {
 
     @GetMapping("/user/create")
     public void createUser() {
-        User user = userService.createUser();
+        Users users = userService.createUser();
 
-        userRepository.delete(user);
+        userRepository.delete(users);
     }
 
     @GetMapping("/user/delete")
     public void deleteUser() {
-        User user = userService.deleteUser();
+        Users users = userService.deleteUser();
 
-        userRepository.delete(user);
+        userRepository.delete(users);
     }
 
     @GetMapping("/user/update/fail")
     public void updateUserFail() {
-        User user = userService.updateUserFail();
+        Users users = userService.updateUserFail();
 
         // DB에 변경내용 적용여부 확인!!
-        userRepository.delete(user);
+        userRepository.delete(users);
     }
 
     @GetMapping("/user/update/1")
     public void updateUser1() {
-        User user = userService.updateUser1();
+        Users users = userService.updateUser1();
 
-        userRepository.delete(user);
+        userRepository.delete(users);
     }
 
     @GetMapping("/user/update/2")
     public void updateUser2() {
-        User user = userService.updateUser2();
+        Users users = userService.updateUser2();
 
         // DB에 변경내용 적용여부 확인!!
-        userRepository.delete(user);
+        userRepository.delete(users);
     }
 }
