@@ -1,5 +1,7 @@
 package com.mallang.persistencecontext.service;
 
+import com.mallang.persistencecontext.repository.UserRepository;
+import com.mallang.persistencecontext.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -91,7 +93,7 @@ public class UserService {
         assert (findUser == savedUser);
         assert (findUser.getUsername().equals(savedUser.getUsername()));
         assert (findUser.getNickname().equals(savedUser.getNickname()));
-        assert (findUser.getFavoriteFood().equls(savedUser.getFavoriteFood()));
+        assert (findUser.getFavoriteFood().equals(savedUser.getFavoriteFood()));
 
         return findUser;
     }
