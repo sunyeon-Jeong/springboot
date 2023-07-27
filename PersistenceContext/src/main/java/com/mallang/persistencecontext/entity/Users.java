@@ -8,7 +8,7 @@ import lombok.Setter;
 @Getter @Setter
 @Entity
 @NoArgsConstructor // 기본생성자 생성
-public class User {
+public class Users {
     // PK를 자연키로 사용 (username)
     @Id
     @Column(name = "id", nullable = false, unique = true)
@@ -20,7 +20,7 @@ public class User {
     @Column(nullable = false, unique = false)
     private String favoriteFood;
 
-    public User(String username, String nickname, String favoriteFood) {
+    public Users(String username, String nickname, String favoriteFood) {
         this.username = username;
         this.nickname = nickname;
         this.favoriteFood = favoriteFood;
