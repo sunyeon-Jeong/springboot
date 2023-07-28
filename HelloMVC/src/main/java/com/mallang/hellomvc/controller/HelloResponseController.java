@@ -1,5 +1,6 @@
 package com.mallang.hellomvc.controller;
 
+import com.mallang.hellomvc.entity.Star;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -57,6 +58,6 @@ public class HelloResponseController {
     @ResponseBody
     @GetMapping("/json/class")
     public Star helloJson() {
-        return new Star("말랑, 22);
+        return new Star("말랑", 22);
     }
 }
