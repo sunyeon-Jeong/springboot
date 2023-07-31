@@ -15,4 +15,4 @@
 - JDK : openjdk-19
 - Java : 17
 - 패키지생성 : Jar
-- Springboot : 3.12
+- Springboot : 3.1.2
