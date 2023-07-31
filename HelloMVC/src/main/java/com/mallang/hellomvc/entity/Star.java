@@ -9,7 +9,7 @@ import lombok.Setter;
 // class 모든 필드값을 파라미터로 받는 생성자추가
 @AllArgsConstructor
 public class Star {
-    String name;
+    public String name;
 
-    int age;
+    public int age;
 }
