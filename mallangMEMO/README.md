@@ -1,5 +1,5 @@
 ## 🔗 Service Architecture
-![CRUDproject_mallangMEMO.png](..%2F..%2F..%2Fdevelope%2FArchitecture%2FCRUDproject_mallangMEMO.png)
+![CRUDproject_mallangMEMO.png](CRUDproject_mallangMEMO.png)
 
 ## 🔐 Project API
 |기능|Method|URL| Return       |
