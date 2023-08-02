@@ -1,5 +1,6 @@
 package com.mallang.mallangmemo.entity;
 
+import com.mallang.mallangmemo.dto.MemoRequestDto;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,4 +18,10 @@ public class Memo extends Timestamped {
 
     @Column(nullable = false)
     private String contents;
+
+    // MemoRequestDto -> 값이 덮어씌워짐
+    public Memo(MemoRequestDto memoRequestDto) {
+        this.username = memoRequestDto.getUsername();
+        this.contents = memoRequestDto.getContents();
+    }
 }
