@@ -2,6 +2,7 @@ package com.mallang.mallangmemo.controller;
 
 import com.mallang.mallangmemo.dto.MemoRequestDto;
 import com.mallang.mallangmemo.entity.Memo;
+import com.mallang.mallangmemo.service.MemoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
