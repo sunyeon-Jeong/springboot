@@ -6,6 +6,7 @@ import com.mallang.mallangmemo.service.MemoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -23,7 +24,7 @@ public class MemoController {
 
     // Memo 생성하기
     @PostMapping("/api/memos")
-    public Memo createMemo(MemoRequestDto memoRequestDto) {
+    public Memo createMemo(@RequestBody MemoRequestDto memoRequestDto) {
         return memoService.createMemo(memoRequestDto);
     }
 }
