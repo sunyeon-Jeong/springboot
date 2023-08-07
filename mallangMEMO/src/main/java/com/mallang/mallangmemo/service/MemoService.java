@@ -32,4 +32,20 @@ public class MemoService {
         // Repository랑 연결필수 (반환타입 + 조회조건)
         return memoRepository.findAllByOrderByModifiedAtDesc();
     }
+
+    // Memo 수정하기
+    @Transactional
+    public Long updateMemo(Long id, MemoRequestDto memoRequestDto) {
+        // 파라미터로 받아온 Id -> DB에 존재하는지 확인 & 객체에 담아옴
+        // 파라미터로 받아온 Id -> DB에 존재하지 않으면 예외처리
+        Memo memo = memoRepository.findById(id).orElseThrow(
+                () -> new IllegalArgumentException("아이디가 존재하지 않습니다.")
+        );
+
+        // Dto값 -> 기존 객체(파라미터 id로 찾은)에 덮어씌우기
+        memo.update(memoRequestDto);
+
+        // Id값 반환
+        return memo.getId();
+    }
 }

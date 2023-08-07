@@ -19,7 +19,7 @@ public class Memo extends Timestamped {
     @Column(nullable = false)
     private String contents;
 
-    // MemoRequestDto -> 값이 덮어씌워짐
+    // Memo 생성하기 (MemoService -> save(memo객체))
     public Memo(MemoRequestDto memoRequestDto) {
         this.username = memoRequestDto.getUsername();
         this.contents = memoRequestDto.getContents();
