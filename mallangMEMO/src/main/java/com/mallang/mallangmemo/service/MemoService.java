@@ -48,4 +48,19 @@ public class MemoService {
         // Id값 반환
         return memo.getId();
     }
+
+    // Memo 삭제하기
+    @Transactional
+    public Long deleteMemo(Long id) {
+        // Id 존재여부 확인 -> 예외처리
+        memoRepository.findById(id).orElseThrow(
+                () -> new IllegalArgumentException("아이디가 존재하지 않습니다.")
+        );
+
+        // Memo 삭제
+        memoRepository.deleteById(id);
+
+        // Id값 반환
+        return id;
+    }
 }
