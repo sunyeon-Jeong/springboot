@@ -4,10 +4,7 @@ import com.mallang.mallangmemo.dto.MemoRequestDto;
 import com.mallang.mallangmemo.entity.Memo;
 import com.mallang.mallangmemo.service.MemoService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
@@ -35,5 +32,12 @@ public class MemoController {
     @GetMapping("/api/memos")
     public List<Memo> getMemos() {
         return memoService.getMemos();
+    }
+
+    // Memo 수정하기
+    @PutMapping("/api/memos/{id}")
+    public Long updateMemo(@PathVariable Long id, // RESTful 통신방법
+                           @RequestBody MemoRequestDto memoRequestDto) {
+        return memoService.updateMemo(id, memoRequestDto);
     }
 }
