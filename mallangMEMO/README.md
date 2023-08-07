@@ -1,4 +1,4 @@
-📍 [GitHub 바로가기](https://velog.io/@mallang/SpringBoot-CRUDprojectMallangMEMO)
+📍 [Velog 바로가기](https://velog.io/@mallang/SpringBoot-CRUDprojectMallangMEMO)
 
 ## 🔗 Service Architecture
 ![CRUDproject_mallangMEMO.png](CRUDproject_mallangMEMO.png)
