@@ -15,6 +15,7 @@ import java.util.List;
 @RestController // @Controller + @ResponseBody -> Json형태의 데이터반환
 @RequiredArgsConstructor // final, @Notnull -> 생성자 자동생성
 public class MemoController {
+
     // service단 객체 불러옴
     private final MemoService memoService;
 
