@@ -10,9 +10,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.List;
+
 @RestController // @Controller + @ResponseBody -> Json형태의 데이터반환
 @RequiredArgsConstructor // final, @Notnull -> 생성자 자동생성
 public class MemoController {
+
     // service단 객체 불러옴
     private final MemoService memoService;
 
@@ -26,5 +29,11 @@ public class MemoController {
     @PostMapping("/api/memos")
     public Memo createMemo(@RequestBody MemoRequestDto memoRequestDto) {
         return memoService.createMemo(memoRequestDto);
+    }
+
+    // Memo 조회하기
+    @GetMapping("/api/memos")
+    public List<Memo> getMemos() {
+        return memoService.getMemos();
     }
 }
