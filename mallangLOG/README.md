@@ -12,10 +12,10 @@
 |**선택한게시글 삭제**|- 삭제요청 시, 비밀번호 → 서버에서 비밀번호 유효성검사 <br> - 선택한게시글 삭제 <br> - 성공메시지 Client 반환|
 
 ### 2️⃣ Service Architecture
-![serviceArchitecture_mallangLOG(Level1).png](..%2F..%2F..%2Fdevelope%2FArchitecture%2FserviceArchitecture_mallangLOG%28Level1%29.png)
+![serviceArchitecture_mallangLOG(Level1).png](serviceArchitecture_mallangLOG%28Level1%29.png)
 
 ### 3️⃣ Usecase
-![usecase_mallangLOG(Level1).png](..%2F..%2F..%2Fdevelope%2FArchitecture%2Fusecase_mallangLOG%28Level1%29.png)
+![usecase_mallangLOG(Level1).png](usecase_mallangLOG%28Level1%29.png)
 
 ### 4️⃣ API 명세서
 |기능|Method|URL|Request|Response|
