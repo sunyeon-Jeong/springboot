@@ -8,6 +8,12 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+/*
+1. 주요 Entity class 객체를 만듦
+2. Controller에서 파라미터로 가져온 RequestDto값 -> Entity 객체 덮어씌움
+3. 초기화 된 Entity -> DB에 CRUD 작업
+4. 초기화 된 Entity -> ResponseDto에 담아 Client에게 return
+ */
 @Service
 @RequiredArgsConstructor // final, @Notnull 필드 -> 생성자생성
 public class PostService {
