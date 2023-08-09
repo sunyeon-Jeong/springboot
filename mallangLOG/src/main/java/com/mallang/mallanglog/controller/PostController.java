@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController // @Controller + @ResponseBody -> JSON형태 데이터반환
-@RequiredArgsConstructor // final, @Notnull 필드 -> 생성자새성
+@RequiredArgsConstructor // final, @Notnull 필드 -> 생성자생성
 public class PostController {
 
     private final PostService postService;
