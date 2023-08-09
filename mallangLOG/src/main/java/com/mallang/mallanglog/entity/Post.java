@@ -4,11 +4,11 @@ import com.mallang.mallanglog.dto.PostRequestDto;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Getter
-@RequiredArgsConstructor // final, @Notnull 필드 -> 생성자생성
+@NoArgsConstructor // 파라미터없는 기본생성자
 public class Post extends Timestamped {
 
     @Id
