@@ -34,4 +34,10 @@ public class PostController {
         return postService.getSelectedPost(id);
     }
 
+    // Post 수정
+    @PutMapping("/post/{id}")
+    public PostResponseDto updatePost(@PathVariable Long id) {
+        return postService.updatePost(id);
+    }
+
 }
