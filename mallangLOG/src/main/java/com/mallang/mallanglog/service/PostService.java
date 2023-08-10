@@ -64,11 +64,33 @@ public class PostService {
         // Repository -> Entity 객체 담아옴 -> 예외처리
         Post selectedPost = postRepository.findById(id).orElseThrow(
                 // IllegalStateException : 적절하지못한 인자를 메서드로 넘겨주었을 때 예외
-                () -> new IllegalStateException("해당 게시글이 존재하지 않습니다.")
+                () -> new IllegalStateException("The Post does not exist.")
         );
 
         // Entity 객체에 담아온 것 -> ResponseDto 생성자 초기화 -> Client 반환
         return PostResponseDto.of(selectedPost);
+
+    }
+
+    // Post 수정
+    @Transactional
+    public PostResponseDto updatePost(Long id, PostRequestDto postRequestDto) {
+
+        // Entity 객체 생성 -> Repository에서 id로 불러옴 -> 예외처리
+        Post updatePost = postRepository.findById(id).orElseThrow(
+                () -> new IllegalStateException("The Post does not exist.")
+        );
+
+        // 비밀번호 유효성검사
+        if (! postRequestDto.getPassword().equals(updatePost.getPassword())) {
+            throw new IllegalStateException("Password is incorrect");
+        }
+
+        // RequestDto -> 불러온 Entity에 덮어씌움
+        updatePost.update(postRequestDto);
+
+        // 수정이 끝난 불러온 Entity 객체 -> ResponseDto 생성자 초기화 -> Client 반환
+        return PostResponseDto.of(updatePost);
 
     }
 
