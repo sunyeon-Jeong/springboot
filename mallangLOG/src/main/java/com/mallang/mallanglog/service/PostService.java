@@ -57,4 +57,19 @@ public class PostService {
 
     }
 
+    // Post 선택조회
+    @Transactional(readOnly = true)
+    public PostResponseDto getSelectedPost(Long id) {
+
+        // Repository -> Entity 객체 담아옴 -> 예외처리
+        Post selectedPost = postRepository.findById(id).orElseThrow(
+                // IllegalStateException : 적절하지못한 인자를 메서드로 넘겨주었을 때 예외
+                () -> new IllegalStateException("해당 게시글이 존재하지 않습니다.")
+        );
+
+        // Entity 객체에 담아온 것 -> ResponseDto 생성자 초기화 -> Client 반환
+        return PostResponseDto.of(selectedPost);
+
+    }
+
 }
