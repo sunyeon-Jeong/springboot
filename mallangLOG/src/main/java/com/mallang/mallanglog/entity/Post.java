@@ -46,4 +46,10 @@ public class Post extends Timestamped {
                 .build();
     }
 
+    // Post 수정 (Service -> RequestDto -> update 메서드)
+    public void update(PostRequestDto postRequestDto) {
+        this.title = postRequestDto.getTitle();
+        this.content = postRequestDto.getContent();
+    }
+
 }
