@@ -4,6 +4,7 @@ import com.mallang.mallanglog.dto.PostRequestDto;
 import com.mallang.mallanglog.dto.PostResponseDto;
 import com.mallang.mallanglog.service.PostService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -25,6 +26,7 @@ public class PostController {
         // @RequestBody : Client 입력값 -> HTTP Body에 JSON형태로 지정객체에 담아옴
 
     // Post 전체조회
+    @GetMapping("/posts")
     public List<PostResponseDto> getPosts() {
         return postService.getPosts();
     }
