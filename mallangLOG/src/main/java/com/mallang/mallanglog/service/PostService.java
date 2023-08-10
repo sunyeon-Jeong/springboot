@@ -8,6 +8,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /*
 1. 주요 Entity class 객체를 만듦
 2. Controller에서 파라미터로 가져온 RequestDto값 -> Entity 객체 덮어씌움
@@ -32,6 +35,25 @@ public class PostService {
 
         // 초기화 된 Entity 객체 -> ResponseDto 생성자에 전달
         return PostResponseDto.of(post);
+
+    }
+
+    // Post 전체조회
+    @Transactional(readOnly = true)
+    public List<PostResponseDto> getPosts() {
+
+        // Repository -> Entity 객체배열
+        List<Post> postList = postRepository.findAllByOrderByModifiedAtDesc();
+
+        // ResponseDto 배열 생성
+        List<PostResponseDto> postResponseDtoList = new ArrayList<>();
+
+        // postList -> postResponseDtoList (List -> List로 바로 못 옮김)
+        for (Post post : postList) {
+            postResponseDtoList.add(PostResponseDto.of(post));
+        }
+
+        return postResponseDtoList;
 
     }
 
