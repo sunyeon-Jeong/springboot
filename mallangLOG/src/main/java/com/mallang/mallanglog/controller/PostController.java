@@ -29,16 +29,16 @@ public class PostController {
     }
 
     // Post 선택조회
-    @GetMapping("/post/{id}")
-    public PostResponseDto getSelectedPost(@PathVariable Long id) {
-        return postService.getSelectedPost(id);
+    @GetMapping("/post/{post-id}")
+    public PostResponseDto getSelectedPost(@PathVariable(name = "post-id") Long postId) {
+        return postService.getSelectedPost(postId);
     }
 
     // Post 수정
-    @PutMapping("/post/{id}")
-    public PostResponseDto updatePost(@PathVariable Long id,
+    @PutMapping("/post/{post-id}")
+    public PostResponseDto updatePost(@PathVariable(name="post-id") Long postId,
                                       @RequestBody PostRequestDto postRequestDto) {
-        return postService.updatePost(id, postRequestDto);
+        return postService.updatePost(postId, postRequestDto);
     }
 
 }

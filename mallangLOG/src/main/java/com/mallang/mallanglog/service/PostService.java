@@ -59,10 +59,10 @@ public class PostService {
 
     // Post 선택조회
     @Transactional(readOnly = true)
-    public PostResponseDto getSelectedPost(Long id) {
+    public PostResponseDto getSelectedPost(Long postId) {
 
         // Repository -> Entity 객체 담아옴 -> 예외처리
-        Post selectedPost = postRepository.findById(id).orElseThrow(
+        Post selectedPost = postRepository.findById(postId).orElseThrow(
                 // IllegalStateException : 적절하지못한 인자를 메서드로 넘겨주었을 때 예외
                 () -> new IllegalStateException("The Post does not exist.")
         );
@@ -74,10 +74,10 @@ public class PostService {
 
     // Post 수정
     @Transactional
-    public PostResponseDto updatePost(Long id, PostRequestDto postRequestDto) {
+    public PostResponseDto updatePost(Long postId, PostRequestDto postRequestDto) {
 
         // Entity 객체 생성 -> Repository에서 id로 불러옴 -> 예외처리
-        Post updatePost = postRepository.findById(id).orElseThrow(
+        Post updatePost = postRepository.findById(postId).orElseThrow(
                 () -> new IllegalStateException("The Post does not exist.")
         );
 
