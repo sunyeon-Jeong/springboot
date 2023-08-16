@@ -3,10 +3,12 @@ package com.mallang.mallanglog.controller;
 import com.mallang.mallanglog.dto.PostRequestDto;
 import com.mallang.mallanglog.dto.PostResponseDto;
 import com.mallang.mallanglog.service.PostService;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController // @Controller + @ResponseBody -> JSON형태 데이터반환
 @RequiredArgsConstructor // final, @Notnull 필드 -> 생성자생성
@@ -39,6 +41,14 @@ public class PostController {
     public PostResponseDto updatePost(@PathVariable(name="post-id") Long postId,
                                       @RequestBody PostRequestDto postRequestDto) {
         return postService.updatePost(postId, postRequestDto);
+    }
+
+    // Post 삭제
+    @DeleteMapping("/post/{post-id}")
+    public Map<String, String> deletePost(@PathVariable(name="post-id") Long postId,
+                                          @RequestBody PostRequestDto postRequestDto,
+                                          HttpServletResponse httpServletResponse) {
+        return postService.deletePost(postId, postRequestDto, httpServletResponse);
     }
 
 }
