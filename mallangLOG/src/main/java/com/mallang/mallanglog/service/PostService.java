@@ -4,12 +4,14 @@ import com.mallang.mallanglog.dto.PostRequestDto;
 import com.mallang.mallanglog.dto.PostResponseDto;
 import com.mallang.mallanglog.entity.Post;
 import com.mallang.mallanglog.repository.PostRepository;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.PathVariable;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 /*
 1. 주요 Entity class 객체를 만듦
@@ -91,6 +93,40 @@ public class PostService {
 
         // 수정이 끝난 불러온 Entity 객체 -> ResponseDto 생성자 초기화 -> Client 반환
         return PostResponseDto.of(updatePost);
+
+    }
+
+    // Post 삭제
+    @Transactional
+    public Map<Integer, String> deletePost(Long postId, PostRequestDto postRequestDto,
+                                          HttpServletResponse httpServletResponse) {
+
+        Map<Integer, String> statusMessage = new HashMap<>();
+
+        // Entity 객체 생성 -> Repository에서 id로 불러옴 -> 예외처리
+        Post deletePost = postRepository.findById(postId).orElseThrow(
+                () -> new IllegalStateException("The Post does not exist.")
+        );
+
+        // 비밀번호 유효성검사
+        if (postRequestDto.getPassword().equals(deletePost.getPassword())) {
+            postRepository.deleteById(postId);
+            statusMessage.put(200, "Deleted Post Successfully");
+            return statusMessage;
+        } else {
+            statusMessage.put(500, "Password is incorrect");
+            return statusMessage;
+        }
+
+        //  statusMessage 반환 (HashMap 형식)
+//        try {
+//            statusMessage.put(200, "Deleted Post Successfully");
+//        } catch (IllegalStateException | IllegalArgumentException exception) {
+//            httpServletResponse.setStatus(HttpStatus.BAD_REQUEST.value());
+//            statusMessage.put(500, exception.getMessage());
+//        }
+//
+//        return statusMessage;
 
     }
 

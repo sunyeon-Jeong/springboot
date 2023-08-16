@@ -45,7 +45,7 @@ public class PostController {
 
     // Post 삭제
     @DeleteMapping("/post/{post-id}")
-    public Map<String, String> deletePost(@PathVariable(name="post-id") Long postId,
+    public Map<Integer, String> deletePost(@PathVariable(name="post-id") Long postId,
                                           @RequestBody PostRequestDto postRequestDto,
                                           HttpServletResponse httpServletResponse) {
         return postService.deletePost(postId, postRequestDto, httpServletResponse);
