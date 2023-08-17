@@ -3,7 +3,6 @@ package com.mallang.mallanglog.controller;
 import com.mallang.mallanglog.dto.PostRequestDto;
 import com.mallang.mallanglog.dto.PostResponseDto;
 import com.mallang.mallanglog.service.PostService;
-import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 

@@ -4,12 +4,9 @@ import com.mallang.mallanglog.dto.PostRequestDto;
 import com.mallang.mallanglog.dto.PostResponseDto;
 import com.mallang.mallanglog.entity.Post;
 import com.mallang.mallanglog.repository.PostRepository;
-import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.*;
 
@@ -66,7 +63,7 @@ public class PostService {
         // Repository -> Entity 객체 담아옴 -> 예외처리
         Post selectedPost = postRepository.findById(postId).orElseThrow(
                 // IllegalStateException : 적절하지못한 인자를 메서드로 넘겨주었을 때 예외
-                () -> new IllegalStateException("The Post does not exist.")
+                () -> new IllegalStateException("The Post does not exist")
         );
 
         // Entity 객체에 담아온 것 -> ResponseDto 생성자 초기화 -> Client 반환
@@ -80,7 +77,7 @@ public class PostService {
 
         // Entity 객체 생성 -> Repository에서 id로 불러옴 -> 예외처리
         Post updatePost = postRepository.findById(postId).orElseThrow(
-                () -> new IllegalStateException("The Post does not exist.")
+                () -> new IllegalStateException("The Post does not exist")
         );
 
         // 비밀번호 유효성검사
@@ -98,17 +95,17 @@ public class PostService {
 
     // Post 삭제
     @Transactional
-    public Map<Integer, String> deletePost(Long postId, PostRequestDto postRequestDto,
-                                          HttpServletResponse httpServletResponse) {
+    public Map<Integer, String> deletePost(Long postId, PostRequestDto postRequestDto) {
 
+        // HashMap<key : value> -> 비밀번호 유효성 검사 후, 상태메시지 반환
         Map<Integer, String> statusMessage = new HashMap<>();
 
         // Entity 객체 생성 -> Repository에서 id로 불러옴 -> 예외처리
         Post deletePost = postRepository.findById(postId).orElseThrow(
-                () -> new IllegalStateException("The Post does not exist.")
+                () -> new IllegalStateException("The Post does not exist")
         );
 
-        // 비밀번호 유효성검사
+        // 비밀번호 유효성검사 -> 상태메시지 반환
         if (postRequestDto.getPassword().equals(deletePost.getPassword())) {
             postRepository.deleteById(postId);
             statusMessage.put(200, "Deleted Post Successfully");
@@ -117,16 +114,6 @@ public class PostService {
             statusMessage.put(500, "Password is incorrect");
             return statusMessage;
         }
-
-        //  statusMessage 반환 (HashMap 형식)
-//        try {
-//            statusMessage.put(200, "Deleted Post Successfully");
-//        } catch (IllegalStateException | IllegalArgumentException exception) {
-//            httpServletResponse.setStatus(HttpStatus.BAD_REQUEST.value());
-//            statusMessage.put(500, exception.getMessage());
-//        }
-//
-//        return statusMessage;
 
     }
 
