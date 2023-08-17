@@ -1,6 +1,6 @@
 # mallangLOG(Level1)
 
-📍 [Velog 바로가기]()
+📍 [Velog 바로가기](https://velog.io/@mallang/SpringBoot-mallangLOGLevel1)
 
 ### 1️⃣ 서비스 요구사항
 |API 구분|기능|
