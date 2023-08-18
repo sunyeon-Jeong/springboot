@@ -12,6 +12,7 @@
 |**HelloMVC**|MVC패턴시스템|
 |**mallangMEMO**|말랑메모장(CRUD)|
 |**mallangLOG**|말랑블로그(CRUD)|
+|**mallangShopBeta**|말랑샵베타버전(NaverAPI, 절차적프로그래밍)|
 
 ### 3️⃣ Contect
 💌 Blog (https://velog.io/@mallang)
