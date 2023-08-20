@@ -1,5 +1,6 @@
 package com.mallang.mallangshopbeta.naver.service;
 
+import com.mallang.mallangshopbeta.naver.dto.ItemDto;
 import lombok.extern.slf4j.Slf4j;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 @Service
