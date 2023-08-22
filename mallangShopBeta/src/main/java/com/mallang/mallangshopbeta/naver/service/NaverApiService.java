@@ -28,7 +28,7 @@ public class NaverApiService {
         String body = "";
 
         // HttpEntity -> header + body
-        HttpEntity<String> requestEntity = new HttpEntity<>(body, httpHeaders);
+        HttpEntity<String> requestEntity = new HttpEntity<String>(body, httpHeaders);
 
         // HttpResponse -> query + GET메서드 + Request(header+body)
         ResponseEntity<String> responseEntity = restTemplate.exchange(
@@ -64,7 +64,7 @@ public class NaverApiService {
         // JSONArray -> for문 돌면서 item 하나씩 꺼내 -> ItemDto에 변환
         for (int i = 0; i < items.length(); i++) {
             JSONObject itemJson = items.getJSONObject(i);
-            ItemDto itemDto = new ItemDto(itemJson);
+            ItemDto itemDto = ItemDto.of(itemJson);
             itemDtoList.add(itemDto);
         }
 
