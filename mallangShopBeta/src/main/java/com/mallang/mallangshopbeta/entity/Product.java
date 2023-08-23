@@ -1,5 +1,6 @@
 package com.mallang.mallangshopbeta.entity;
 
+import com.mallang.mallangshopbeta.dto.ProductRequestDto;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
@@ -12,7 +13,8 @@ import lombok.Setter;
 public class Product {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY) // Id 자동생성 및 증가
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    // Id 자동생성 및 증가
     private Long id;
 
     @Column(nullable = false)
@@ -32,21 +34,21 @@ public class Product {
 
     // 생성자
     @Builder
-    private Product(String title, String image, String link, int lprice, int myprice) {
+    private Product(String title, String image, String link, int lprice) {
         this.title = title;
         this.image = image;
         this.link = link;
         this.lprice = lprice;
-        this.myprice = myprice;
+        this.myprice = 0;
     }
 
+    // 정적팩토리메서드
     public static Product of(ProductRequestDto productRequestDto) {
         return Product.builder()
                 .title(productRequestDto.getTitle())
                 .image(productRequestDto.getImage())
                 .link(productRequestDto.getLink())
                 .lprice(productRequestDto.getLprice())
-                .myprice(0)
                 .build();
     }
 
