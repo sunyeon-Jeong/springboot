@@ -15,15 +15,15 @@ public class ItemDto {
 
     private String image;
 
-    private int lowPrice;
+    private int lprice;
 
     // 생성자
     @Builder
-    private ItemDto(String title, String link, String image, int lowPrice) {
+    private ItemDto(String title, String link, String image, int lprice) {
         this.title = title;
         this.link = link;
         this.image = image;
-        this.lowPrice = lowPrice;
+        this.lprice = lprice;
     }
 
     // 정적팩토리메서드
@@ -31,8 +31,8 @@ public class ItemDto {
         return ItemDto.builder()
                 .title(itemJson.getString("title"))
                 .link(itemJson.getString("link"))
-                .image(itemJson.getString(("image")))
-                .lowPrice(itemJson.getInt("lowPrice"))
+                .image(itemJson.getString("image"))
+                .lprice(itemJson.getInt("lprice"))
                 .build();
     }
 
