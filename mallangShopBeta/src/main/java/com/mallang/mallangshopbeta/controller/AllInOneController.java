@@ -1,5 +1,6 @@
 package com.mallang.mallangshopbeta.controller;
 
+import com.mallang.mallangshopbeta.dto.ProductMypriceRequestDto;
 import com.mallang.mallangshopbeta.dto.ProductRequestDto;
 import com.mallang.mallangshopbeta.dto.ProductResponseDto;
 import com.mallang.mallangshopbeta.entity.Product;
@@ -92,6 +93,54 @@ public class AllInOneController {
 
         // Response 전송
         return productResponseDtoList;
+
+    }
+
+    // 관심상품 최저가 등록
+    @PutMapping("/products/{id}")
+    public Long updateProduct(@PathVariable Long id, @RequestBody ProductMypriceRequestDto productMypriceRequestDto) throws SQLException {
+
+        // Entity 객체생성
+        Product product = new Product();
+
+        // DB 연결
+        Connection connection = DriverManager.getConnection("jdbc:h2:mem:db", "mallang", "");
+
+        // DB Query 작성
+        PreparedStatement preparedStatement = connection.prepareStatement("select  * from product where id = ?");
+
+        preparedStatement.setLong(1, id);
+
+        // DB Query 실행
+        ResultSet resultSet = preparedStatement.executeQuery();
+
+        if (resultSet.next()) {
+            product.setId(resultSet.getLong("id"));
+            product.setTitle(resultSet.getString("title"));
+            product.setImage(resultSet.getString("image"));
+            product.setLink(resultSet.getString("link"));
+            product.setLprice(resultSet.getInt("lprice"));
+            product.setMyprice(resultSet.getInt("myprice"));
+        } else {
+            throw new NullPointerException("해당 Id가 존재하지 않습니다.");
+        }
+
+        // DB Query 작성
+        preparedStatement = connection.prepareStatement("update product set myprice = ? where id = ?");
+
+        preparedStatement.setInt(1, productMypriceRequestDto.getMyprice());
+        preparedStatement.setLong(2, product.getId());
+
+        // DB Query 실행
+        preparedStatement.executeUpdate();
+
+        // DB 연결해제
+        resultSet.close();
+        preparedStatement.close();
+        connection.close();
+
+        // Response 전송
+        return product.getId();
 
     }
 
