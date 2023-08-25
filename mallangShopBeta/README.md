@@ -1,6 +1,6 @@
 # mallangShopBeta
 
-[📍 Velog 바로가기]()
+[📍 Velog 바로가기](https://velog.io/@mallang/SpringBoot-mallangShopBeta)
 
 ### 1️⃣ 서비스기능
 |서비스기능|
@@ -28,4 +28,4 @@
 - 패키지 : Jar
 - JDK : openjdk-19
 - Java : 17
-- SpringBoot : 3.1.2g
+- SpringBoot : 3.1.2
