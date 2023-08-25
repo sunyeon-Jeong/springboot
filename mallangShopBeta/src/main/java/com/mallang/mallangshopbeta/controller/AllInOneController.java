@@ -3,12 +3,11 @@ package com.mallang.mallangshopbeta.controller;
 import com.mallang.mallangshopbeta.dto.ProductRequestDto;
 import com.mallang.mallangshopbeta.dto.ProductResponseDto;
 import com.mallang.mallangshopbeta.entity.Product;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 // JSON 형태의 데이터반환
 @RestController
@@ -55,6 +54,44 @@ public class AllInOneController {
 
         // Response 전송
         return ProductResponseDto.of(product);
+
+    }
+
+    // 관심상품 조회
+    @GetMapping("/products")
+    public List<ProductResponseDto> getProducts() throws SQLException {
+
+        // 반환타입 (ResponseDtoList) 객체생성
+        List<ProductResponseDto> productResponseDtoList = new ArrayList<>();
+
+        // DB 연결
+        Connection connection = DriverManager.getConnection("jdbc:h2:mem:db", "mallang", "");
+
+        // DB Query 작성 및 실행
+        Statement statement = connection.createStatement();
+
+        ResultSet resultSet = statement.executeQuery("select * from product");
+
+        // DB Query 결과 -> productResponseDtoList 변환
+        while (resultSet.next()) {
+            Product product = new Product();
+
+            product.setId(resultSet.getLong("id"));
+            product.setTitle(resultSet.getString("title"));
+            product.setImage(resultSet.getString("image"));
+            product.setLink(resultSet.getString("link"));
+            product.setLprice(resultSet.getInt("lprice"));
+            product.setMyprice(resultSet.getInt("myprice"));
+
+            productResponseDtoList.add(ProductResponseDto.of(product));
+        }
+
+        // DB 연결해제
+        resultSet.close();
+        connection.close();
+
+        // Response 전송
+        return productResponseDtoList;
 
     }
 
