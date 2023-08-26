@@ -1,5 +1,6 @@
 package com.mallang.mallangshop.entity;
 
+import com.mallang.mallangshop.dto.ProductRequestDto;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
