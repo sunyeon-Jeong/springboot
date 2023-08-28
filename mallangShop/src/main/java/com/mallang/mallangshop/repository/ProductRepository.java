@@ -108,4 +108,39 @@ public class ProductRepository {
 
     }
 
+    public Product getProduct(Long id) throws SQLException {
+
+        Product product = new Product();
+
+        // DB 연결
+        Connection connection = DriverManager.getConnection("jdbc:h2:mem:db;MODE=MYSQL", "mallang", "");
+
+        // DB Query 작성
+        PreparedStatement preparedStatement = connection.prepareStatement("select * from product where id = ?");
+
+        preparedStatement.setLong(1, id);
+
+        // DB Query 실행
+        ResultSet resultSet = preparedStatement.executeQuery();
+
+        if (resultSet.next()) {
+            product.setId(resultSet.getLong("id"));
+            product.setTitle(resultSet.getString("title"));
+            product.setImage(resultSet.getString("image"));
+            product.setLink(resultSet.getString("link"));
+            product.setLprice(resultSet.getInt("lprice"));
+            product.setMyprice(resultSet.getInt("myprice"));
+        }
+
+        // DB 연결해제
+        resultSet.close();
+
+        preparedStatement.close();
+
+        connection.close();
+
+        return product;
+
+    }
+
 }
