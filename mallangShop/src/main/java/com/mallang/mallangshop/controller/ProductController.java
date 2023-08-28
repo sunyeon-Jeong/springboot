@@ -4,7 +4,7 @@ import com.mallang.mallangshop.dto.ProductMypriceRequestDto;
 import com.mallang.mallangshop.dto.ProductRequestDto;
 import com.mallang.mallangshop.dto.ProductResponseDto;
 import com.mallang.mallangshop.service.ProductService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.*;
@@ -12,17 +12,12 @@ import java.util.List;
 
 // JSON 형태의 데이터반환
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/api")
 public class ProductController {
 
     // 객체중복생성 해결 -> 멤버변수 선언
     private final ProductService productService;
-
-    // 생성자
-    @Autowired
-    public ProductController(ProductService productService) {
-        this.productService = productService;
-    }
 
     // 관심상품 등록
     @PostMapping("/products")
