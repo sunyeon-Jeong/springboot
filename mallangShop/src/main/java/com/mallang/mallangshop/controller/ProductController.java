@@ -13,7 +13,7 @@ import java.util.List;
 // JSON 형태의 데이터반환
 @RestController
 @RequestMapping("/api")
-public class AllInOneController{
+public class ProductController {
 
     // 관심상품 등록
     @PostMapping("/products")
