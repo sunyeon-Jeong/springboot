@@ -4,6 +4,7 @@ import com.mallang.mallangshop.repository.ProductRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+/*
 // 직접 객체를 사용 -> Bean DI 주입
 @Configuration
 public class BeanConfiguration {
@@ -20,3 +21,4 @@ public class BeanConfiguration {
     }
 
 }
+*/

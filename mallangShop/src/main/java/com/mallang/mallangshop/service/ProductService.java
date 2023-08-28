@@ -6,12 +6,13 @@ import com.mallang.mallangshop.dto.ProductResponseDto;
 import com.mallang.mallangshop.entity.Product;
 import com.mallang.mallangshop.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
-@Component // Bean 등록
+@Service
 @RequiredArgsConstructor
 public class ProductService {
 
@@ -19,31 +20,42 @@ public class ProductService {
     private final ProductRepository productRepository;
 
     // 관심상품 등록
-    public ProductResponseDto createProduct(ProductRequestDto productRequestDto) throws SQLException {
+    @Transactional
+    public ProductResponseDto createProduct(ProductRequestDto productRequestDto) {
 
-        Product product = Product.of(productRequestDto);
+        Product product = productRepository.saveAndFlush(Product.of(productRequestDto));
 
-        return productRepository.createProduct(product);
+        return ProductResponseDto.of(product);
 
     }
 
     // 관심상품 조회
-    public List<ProductResponseDto> getProducts() throws SQLException {
+    @Transactional(readOnly = true)
+    public List<ProductResponseDto> getProducts() {
 
-        return productRepository.getProducts();
+        List<ProductResponseDto> productResponseDtoList = new ArrayList<>();
+
+        List<Product> productList = productRepository.findAll();
+
+        for (Product product : productList) {
+            productResponseDtoList.add(ProductResponseDto.of(product));
+        }
+
+        return productResponseDtoList;
 
     }
 
     // 관심상품 최저가 등록
-    public Long updateProduct(Long id, ProductMypriceRequestDto productMypriceRequestDto) throws SQLException {
+    @Transactional
+    public Long updateProduct(Long id, ProductMypriceRequestDto productMypriceRequestDto) {
 
-        Product product = productRepository.getProduct(id);
+        Product product = productRepository.findById(id).orElseThrow(
+                () -> new NullPointerException("해당 상품은 존재하지 않습니다;")
+        );
 
-        if (product == null) {
-            throw new NullPointerException("해당 상품은 존재하지 않습니다");
-        }
+        product.update(productMypriceRequestDto);
 
-        return productRepository.updateProduct(product.getId(), productMypriceRequestDto);
+        return product.getId();
 
     }
 
