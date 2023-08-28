@@ -9,14 +9,24 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@Component // Bean 등록
 public class ProductRepository {
+
+    // Spring Bean DI 주입
+    private final String dbUrl;
+    private final String username;
+    private final String password;
+
+    public ProductRepository(String dbUrl, String username, String password) {
+        this.dbUrl = dbUrl;
+        this.username = username;
+        this.password = password;
+    }
 
     // 관심상품 등록
     public ProductResponseDto createProduct(Product product) throws SQLException {
 
         // DB 연결
-        Connection connection = DriverManager.getConnection("jdbc:h2:mem:db;MODE=MYSQL", "mallang", "");
+        Connection connection = getConnection();
 
         // DB Query 작성
         PreparedStatement preparedStatement = connection.prepareStatement("select max(id) as id from product");
@@ -53,7 +63,7 @@ public class ProductRepository {
         List<ProductResponseDto> productResponseDtoList = new ArrayList<>();
 
         // DB 연결
-        Connection connection = DriverManager.getConnection("jdbc:h2:mem:db;MODE=MYSQL", "mallang", "");
+        Connection connection = getConnection();
 
         // DB Query 작성 및 실행
         Statement statement = connection.createStatement();
@@ -88,7 +98,7 @@ public class ProductRepository {
     public Long updateProduct(Long id, ProductMypriceRequestDto productMypriceRequestDto) throws SQLException {
 
         // DB 연결
-        Connection connection = DriverManager.getConnection("jdbc:h2:mem:db;MODE=MYSQL", "mallang", "");
+        Connection connection = getConnection();
 
         // DB Query 작성
         PreparedStatement preparedStatement = connection.prepareStatement("update product set myprice = ? where id = ?");
@@ -113,7 +123,7 @@ public class ProductRepository {
         Product product = new Product();
 
         // DB 연결
-        Connection connection = DriverManager.getConnection("jdbc:h2:mem:db;MODE=MYSQL", "mallang", "");
+        Connection connection = getConnection();
 
         // DB Query 작성
         PreparedStatement preparedStatement = connection.prepareStatement("select * from product where id = ?");
@@ -141,6 +151,10 @@ public class ProductRepository {
 
         return product;
 
+    }
+
+    public Connection getConnection() throws SQLException {
+        return DriverManager.getConnection(dbUrl, username, password);
     }
 
 }
