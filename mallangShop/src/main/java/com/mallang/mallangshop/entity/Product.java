@@ -1,5 +1,6 @@
 package com.mallang.mallangshop.entity;
 
+import com.mallang.mallangshop.dto.ProductMypriceRequestDto;
 import com.mallang.mallangshop.dto.ProductRequestDto;
 import jakarta.persistence.*;
 import lombok.Builder;
@@ -50,6 +51,11 @@ public class Product {
                 .link(productRequestDto.getLink())
                 .lprice(productRequestDto.getLprice())
                 .build();
+    }
+
+    // 관심상품 최저가 등록 (update)
+    public void update(ProductMypriceRequestDto productMypriceRequestDto) {
+        this.myprice = productMypriceRequestDto.getMyprice();
     }
 
 }
