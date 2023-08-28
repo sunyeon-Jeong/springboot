@@ -4,12 +4,13 @@ import com.mallang.mallangshop.dto.ProductMypriceRequestDto;
 import com.mallang.mallangshop.dto.ProductRequestDto;
 import com.mallang.mallangshop.dto.ProductResponseDto;
 import com.mallang.mallangshop.entity.Product;
+import com.mallang.mallangshop.repository.ProductRepository;
 import org.springframework.stereotype.Component;
 
 import java.sql.SQLException;
 import java.util.List;
 
-@Component
+@Component // Bean 등록
 public class ProductService {
 
     // 관심상품 등록
