@@ -4,6 +4,7 @@ import com.mallang.mallangshop.dto.ProductMypriceRequestDto;
 import com.mallang.mallangshop.dto.ProductRequestDto;
 import com.mallang.mallangshop.dto.ProductResponseDto;
 import com.mallang.mallangshop.entity.Product;
+import com.mallang.mallangshop.service.ProductService;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.*;
