@@ -21,7 +21,7 @@ public class ProductController {
 
     // 관심상품 등록
     @PostMapping("/products")
-    public ProductResponseDto createProduct(@RequestBody ProductRequestDto productRequestDto) throws SQLException {
+    public ProductResponseDto createProduct(@RequestBody ProductRequestDto productRequestDto) {
 
         return productService.createProduct(productRequestDto);
 
@@ -29,7 +29,7 @@ public class ProductController {
 
     // 관심상품 조회
     @GetMapping("/products")
-    public List<ProductResponseDto> getProducts() throws SQLException {
+    public List<ProductResponseDto> getProducts() {
 
         return productService.getProducts();
 
@@ -37,7 +37,7 @@ public class ProductController {
 
     // 관심상품 최저가 등록
     @PutMapping("/products/{id}")
-    public Long updateProduct(@PathVariable Long id, @RequestBody ProductMypriceRequestDto productMypriceRequestDto) throws SQLException {
+    public Long updateProduct(@PathVariable Long id, @RequestBody ProductMypriceRequestDto productMypriceRequestDto) {
 
         return productService.updateProduct(id, productMypriceRequestDto);
 
