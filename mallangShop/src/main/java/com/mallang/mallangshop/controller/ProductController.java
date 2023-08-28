@@ -4,6 +4,7 @@ import com.mallang.mallangshop.dto.ProductMypriceRequestDto;
 import com.mallang.mallangshop.dto.ProductRequestDto;
 import com.mallang.mallangshop.dto.ProductResponseDto;
 import com.mallang.mallangshop.service.ProductService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.*;
@@ -18,6 +19,7 @@ public class ProductController {
     private final ProductService productService;
 
     // 생성자
+    @Autowired
     public ProductController(ProductService productService) {
         this.productService = productService;
     }
