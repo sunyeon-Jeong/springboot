@@ -3,12 +3,10 @@ package com.mallang.mallangshop.controller;
 import com.mallang.mallangshop.dto.ProductMypriceRequestDto;
 import com.mallang.mallangshop.dto.ProductRequestDto;
 import com.mallang.mallangshop.dto.ProductResponseDto;
-import com.mallang.mallangshop.entity.Product;
 import com.mallang.mallangshop.service.ProductService;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.*;
-import java.util.ArrayList;
 import java.util.List;
 
 // JSON 형태의 데이터반환
@@ -16,11 +14,17 @@ import java.util.List;
 @RequestMapping("/api")
 public class ProductController {
 
+    // 객체중복생성 해결 -> 멤버변수 선언
+    private final ProductService productService;
+
+    // 생성자
+    public ProductController(ProductService productService) {
+        this.productService = productService;
+    }
+
     // 관심상품 등록
     @PostMapping("/products")
     public ProductResponseDto createProduct(@RequestBody ProductRequestDto productRequestDto) throws SQLException {
-
-        ProductService productService = new ProductService();
 
         return productService.createProduct(productRequestDto);
 
@@ -30,8 +34,6 @@ public class ProductController {
     @GetMapping("/products")
     public List<ProductResponseDto> getProducts() throws SQLException {
 
-        ProductService productService = new ProductService();
-
         return productService.getProducts();
 
     }
@@ -39,8 +41,6 @@ public class ProductController {
     // 관심상품 최저가 등록
     @PutMapping("/products/{id}")
     public Long updateProduct(@PathVariable Long id, @RequestBody ProductMypriceRequestDto productMypriceRequestDto) throws SQLException {
-
-        ProductService productService = new ProductService();
 
         return productService.updateProduct(id, productMypriceRequestDto);
 

@@ -13,12 +13,18 @@ import java.util.List;
 @Component // Bean 등록
 public class ProductService {
 
+    // 객체중복생성 해결 -> 멤버변수 선언
+    private final ProductRepository productRepository;
+
+    // 생성자
+    public ProductService(ProductRepository productRepository) {
+        this.productRepository = productRepository;
+    }
+
     // 관심상품 등록
     public ProductResponseDto createProduct(ProductRequestDto productRequestDto) throws SQLException {
 
         Product product = Product.of(productRequestDto);
-
-        ProductRepository productRepository = new ProductRepository();
 
         return productRepository.createProduct(product);
 
@@ -27,16 +33,12 @@ public class ProductService {
     // 관심상품 조회
     public List<ProductResponseDto> getProducts() throws SQLException {
 
-        ProductRepository productRepository = new ProductRepository();
-
         return productRepository.getProducts();
 
     }
 
     // 관심상품 최저가 등록
     public Long updateProduct(Long id, ProductMypriceRequestDto productMypriceRequestDto) throws SQLException {
-
-        ProductRepository productRepository = new ProductRepository();
 
         Product product = productRepository.getProduct(id);
 
