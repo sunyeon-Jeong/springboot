@@ -2,6 +2,7 @@ package com.mallang.mallangshop.entity;
 
 import com.mallang.mallangshop.dto.ProductMypriceRequestDto;
 import com.mallang.mallangshop.dto.ProductRequestDto;
+import com.mallang.mallangshop.naver.dto.ItemDto;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
@@ -11,7 +12,7 @@ import lombok.Setter;
 @Entity
 @Getter @Setter
 @NoArgsConstructor
-public class Product {
+public class Product extends Timestamped {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -56,6 +57,11 @@ public class Product {
     // 관심상품 최저가 등록 (update)
     public void update(ProductMypriceRequestDto productMypriceRequestDto) {
         this.myprice = productMypriceRequestDto.getMyprice();
+    }
+
+    // 관심상품 최저가 업데이트
+    public void updateLprice(ItemDto itemDto) {
+        this.lprice = itemDto.getLprice();
     }
 
 }
