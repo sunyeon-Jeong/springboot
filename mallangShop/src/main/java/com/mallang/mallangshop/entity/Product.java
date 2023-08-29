@@ -12,7 +12,7 @@ import lombok.Setter;
 @Entity
 @Getter @Setter
 @NoArgsConstructor
-public class Product {
+public class Product extends Timestamped {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
