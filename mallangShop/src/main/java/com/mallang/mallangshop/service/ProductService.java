@@ -4,6 +4,7 @@ import com.mallang.mallangshop.dto.ProductMypriceRequestDto;
 import com.mallang.mallangshop.dto.ProductRequestDto;
 import com.mallang.mallangshop.dto.ProductResponseDto;
 import com.mallang.mallangshop.entity.Product;
+import com.mallang.mallangshop.naver.dto.ItemDto;
 import com.mallang.mallangshop.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -50,12 +51,24 @@ public class ProductService {
     public Long updateProduct(Long id, ProductMypriceRequestDto productMypriceRequestDto) {
 
         Product product = productRepository.findById(id).orElseThrow(
-                () -> new NullPointerException("해당 상품은 존재하지 않습니다;")
+                () -> new NullPointerException("해당 상품은 존재하지 않습니다")
         );
 
         product.update(productMypriceRequestDto);
 
         return product.getId();
+
+    }
+
+    // 관심상품 최저가 업데이트
+    public void updateBySearch(Long id, ItemDto itemDto) {
+
+        Product product = productRepository.findById(id).orElseThrow(
+                () -> new NullPointerException("해당 상품은 존재하지 않습니다")
+        );
+
+        // Product Entity method 실행
+        product.updateLprice(itemDto);
 
     }
 
