@@ -1,6 +1,8 @@
-## mallangShop
+# 🐰 mallangShop
 
-[📍 Velog 바로가기]()
+[📍 Velog 바로가기](https://velog.io/@mallang/SpringBoot-mallangShop)
+
+## 1 mallangShop 베타버전 Refactoring 
 
 ### 1️⃣ 서비스기능
 |서비스기능|
@@ -9,10 +11,8 @@
 |2. 관심상품 등록하기|
 |3. 관심상품 조회하기|
 |4. 관심상품 최저가등록하기|
-|5. 회원가입|
-|6. 로그인|
 
-### 2️⃣ API 명세서
+### 2️⃣ API 명세서 - Product
 |기능|Method|URL|Request| Response                                                                                                                                                                                                                                |
 |---|---|---|---|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 |메인페이지|`GET`|/api/shop|-| index.html                                                                                                                                                                                                                              |
@@ -30,3 +30,19 @@
 
 #### 📍 Repository
 ![img_2.png](img_2.png)
+
+## 2 mallangShop 인증 Feature
+
+### 1️⃣ 서비스기능 추가
+|서비스기능|
+|---|
+|5. 회원가입|
+|6. 로그인&로그아웃|
+
+### 2️⃣ API 명세서 - User
+|기능|Method|URL|Request|Response|
+|---|---|---|---|---|
+|회원가입페이지|`GET`|/api/user/signup|-|signup.html|
+|회원가입|`POST`|/api/user/signup|POST Form 태그 <br> { <br> &nbsp;&nbsp;"username" : String, <br> &nbsp;&nbsp;"password" : String, <br> &nbsp;&nbsp;"email" : String, <br> &nbsp;&nbsp;"admin" : boolean, <br> &nbsp;&nbsp;"adminToken" : String <br> }|redirect:/api/user/login|
+|로그인페이지|`GET`|/api/user/login|-|login.html|
+|로그인|`POST`|/api/user/login|POST Form 태그 <br> { <br> &nbsp;&nbsp;"username" : String, <br> &nbsp;&nbsp;"password" : String <br> }|redirect:/api/shop|
