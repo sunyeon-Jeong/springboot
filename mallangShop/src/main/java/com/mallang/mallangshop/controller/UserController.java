@@ -1,5 +1,6 @@
 package com.mallang.mallangshop.controller;
 
+import com.mallang.mallangshop.dto.LoginRequestDto;
 import com.mallang.mallangshop.dto.SignupRequestDto;
 import com.mallang.mallangshop.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -35,6 +36,16 @@ public class UserController {
         userService.signup(signupRequestDto);
 
         return "redirect:/api/user/login";
+
+    }
+
+    // 로그인
+    @PostMapping("/login")
+    public String login(LoginRequestDto loginRequestDto) {
+
+        userService.login(loginRequestDto);
+
+        return "redirect:/api/shop";
 
     }
 

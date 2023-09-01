@@ -1,5 +1,6 @@
 package com.mallang.mallangshop.service;
 
+import com.mallang.mallangshop.dto.LoginRequestDto;
 import com.mallang.mallangshop.dto.SignupRequestDto;
 import com.mallang.mallangshop.entity.User;
 import com.mallang.mallangshop.entity.UserRoleEnum;
@@ -56,6 +57,26 @@ public class UserService {
 
         // 6. Entity -> DB table 저장
         userRepository.save(user);
+
+    }
+
+    // 로그인
+    @Transactional(readOnly = true)
+    public void login(LoginRequestDto loginRequestDto) {
+
+        // 1. RequestDto -> ID/PW 가져옴
+        String username = loginRequestDto.getUsername();
+        String password = loginRequestDto.getPassword();
+
+        // 2. 회원유효성검사
+        User user = userRepository.findByUsername(username).orElseThrow(
+                () -> new IllegalArgumentException("등록된 사용자가 없습니다")
+        );
+
+        // 3. 비밀번호유효성검사
+        if (! user.getPassword().equals(password)) {
+            throw new IllegalArgumentException("비밀번호가 일치하지 않습니다");
+        }
 
     }
 
