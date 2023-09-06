@@ -34,23 +34,28 @@ public class Product extends Timestamped {
     @Column(nullable = false)
     private int myprice;
 
+    @Column(nullable = false)
+    private Long userId;
+
     // 생성자
     @Builder
-    private Product(String title, String image, String link, int lprice) {
+    private Product(String title, String image, String link, int lprice, Long userId) {
         this.title = title;
         this.image = image;
         this.link = link;
         this.lprice = lprice;
         this.myprice = 0;
+        this.userId = userId;
     }
 
     // 정적팩토리메서드
-    public static Product of(ProductRequestDto productRequestDto) {
+    public static Product of(ProductRequestDto productRequestDto, Long userId) {
         return Product.builder()
                 .title(productRequestDto.getTitle())
                 .image(productRequestDto.getImage())
                 .link(productRequestDto.getLink())
                 .lprice(productRequestDto.getLprice())
+                .userId(userId)
                 .build();
     }
 
