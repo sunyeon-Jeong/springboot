@@ -3,11 +3,10 @@ package com.mallang.mallangshop.controller;
 import com.mallang.mallangshop.dto.LoginRequestDto;
 import com.mallang.mallangshop.dto.SignupRequestDto;
 import com.mallang.mallangshop.service.UserService;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
@@ -40,12 +39,13 @@ public class UserController {
     }
 
     // 로그인
+    @ResponseBody
     @PostMapping("/login")
-    public String login(LoginRequestDto loginRequestDto) {
+    public String login(@RequestBody LoginRequestDto loginRequestDto, HttpServletResponse httpServletResponse) {
 
-        userService.login(loginRequestDto);
+        userService.login(loginRequestDto, httpServletResponse);
 
-        return "redirect:/api/shop";
+        return "success";
 
     }
 
