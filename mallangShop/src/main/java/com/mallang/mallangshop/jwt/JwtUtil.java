@@ -1,5 +1,7 @@
 package com.mallang.mallangshop.jwt;
 
+import com.mallang.mallangshop.entity.UserRoleEnum;
+import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
 import jakarta.annotation.PostConstruct;
@@ -12,6 +14,7 @@ import org.springframework.util.StringUtils;
 
 import java.security.Key;
 import java.util.Base64;
+import java.util.Date;
 
 @Slf4j
 @Component
@@ -53,7 +56,7 @@ public class JwtUtil {
 
 
     /* 2. Client Request Header -> JWT Token 가져오기 */
-    public String resolveToken(HttpServletRequest httpServletRequest) {
+    public String getToken(HttpServletRequest httpServletRequest) {
 
         // Header에 있는 JWT Token -> clientToken에 담음
         String clientToken = httpServletRequest.getHeader(AUTHORIZATION_HEADER);
@@ -64,6 +67,23 @@ public class JwtUtil {
         }
 
         return null;
+
+    }
+
+
+    /* 3. JWT Token 생성 */
+    public String createToken(String username, UserRoleEnum userRoleEnum) {
+
+        Date date = new Date();
+
+        return BEARER_PREFIX +
+                Jwts.builder()
+                        .setSubject(username)
+                        .claim(AUTHORIZATION_KEY, userRoleEnum)
+                        .setExpiration(new Date(date.getTime() + TOKEN_TIME))
+                        .setIssuedAt(date)
+                        .signWith(key, signatureAlgorithm)
+                        .compact();
 
     }
 
