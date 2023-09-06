@@ -1,8 +1,7 @@
 package com.mallang.mallangshop.jwt;
 
 import com.mallang.mallangshop.entity.UserRoleEnum;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import jakarta.annotation.PostConstruct;
 import jakarta.servlet.http.HttpServletRequest;
@@ -84,6 +83,29 @@ public class JwtUtil {
                         .setIssuedAt(date)
                         .signWith(key, signatureAlgorithm)
                         .compact();
+
+    }
+
+
+    /* 4. JWT Token 검증 */
+    public boolean validateToken(String token) {
+
+        try {
+
+            Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token);
+            return true;
+
+        } catch (SecurityException | MalformedJwtException exception) {
+            log.info("Invalid JWT signature, 유효하지 않는 JWT 서명 입니다");
+        } catch (ExpiredJwtException exception) {
+            log.info("Expired JWT Token, 만료된 JWT Token 입니다");
+        } catch (UnsupportedJwtException exception) {
+            log.info("Unsupported JWT Token, 지원되지 않는 JWT Token 입니다");
+        } catch (IllegalArgumentException exception) {
+            log.info("JWT claims is empty, 잘못된 JWT Token 입니다");
+        }
+
+        return false;
 
     }
 
