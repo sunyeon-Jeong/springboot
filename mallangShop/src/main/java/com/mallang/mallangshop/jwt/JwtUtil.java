@@ -109,4 +109,12 @@ public class JwtUtil {
 
     }
 
+
+    /* 5. JWT Token -> 회원정보 가져오기 */
+    public Claims getUserInfoFromToken(String token) {
+
+        return Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token).getBody();
+
+    }
+
 }
