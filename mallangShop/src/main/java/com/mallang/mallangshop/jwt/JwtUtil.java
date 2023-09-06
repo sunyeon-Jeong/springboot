@@ -3,10 +3,12 @@ package com.mallang.mallangshop.jwt;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
 import jakarta.annotation.PostConstruct;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.Value;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 
 import java.security.Key;
 import java.util.Base64;
@@ -49,5 +51,20 @@ public class JwtUtil {
         key = Keys.hmacShaKeyFor(bytes);
     }
 
+
+    /* 2. Client Request Header -> JWT Token 가져오기 */
+    public String resolveToken(HttpServletRequest httpServletRequest) {
+
+        // Header에 있는 JWT Token -> clientToken에 담음
+        String clientToken = httpServletRequest.getHeader(AUTHORIZATION_HEADER);
+
+        // clientToken 존재 + Bearer로 시작 -> JWT Token 값만 추출
+        if (StringUtils.hasText(clientToken) && clientToken.startsWith(BEARER_PREFIX)) {
+            return clientToken.substring(7);
+        }
+
+        return null;
+
+    }
 
 }
