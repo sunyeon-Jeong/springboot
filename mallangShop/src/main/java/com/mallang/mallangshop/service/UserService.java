@@ -4,7 +4,9 @@ import com.mallang.mallangshop.dto.LoginRequestDto;
 import com.mallang.mallangshop.dto.SignupRequestDto;
 import com.mallang.mallangshop.entity.User;
 import com.mallang.mallangshop.entity.UserRoleEnum;
+import com.mallang.mallangshop.jwt.JwtUtil;
 import com.mallang.mallangshop.repository.UserRepository;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,6 +18,8 @@ import java.util.Optional;
 public class UserService {
 
     private final UserRepository userRepository;
+
+    private final JwtUtil jwtUtil;
 
     // ADMIN_TOKEN
     private static final String ADMIN_TOKEN = "AAABnvxRVklrnYxKZ0aHgTBcXukeZygoC";
@@ -62,7 +66,7 @@ public class UserService {
 
     // 로그인
     @Transactional(readOnly = true)
-    public void login(LoginRequestDto loginRequestDto) {
+    public void login(LoginRequestDto loginRequestDto, HttpServletResponse httpServletResponse) {
 
         // 1. RequestDto -> ID/PW 가져옴
         String username = loginRequestDto.getUsername();
@@ -77,6 +81,9 @@ public class UserService {
         if (! user.getPassword().equals(password)) {
             throw new IllegalArgumentException("비밀번호가 일치하지 않습니다");
         }
+
+        // 4. 로그인성공 -> Http Response Header에 JWT Token 보내기
+        httpServletResponse.addHeader(JwtUtil.AUTHORIZATION_HEADER, jwtUtil.createToken(user.getUsername(), user.getRole()));
 
     }
 
