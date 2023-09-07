@@ -82,8 +82,8 @@ public class UserService {
             throw new IllegalArgumentException("비밀번호가 일치하지 않습니다");
         }
 
-        // 4. 로그인성공 -> Http Response Header에 JWT Token 보내기
-        httpServletResponse.addHeader(JwtUtil.AUTHORIZATION_HEADER, jwtUtil.createToken(user.getUsername(), user.getRole()));
+        // 4. 로그인성공 -> Http Response Header에 JWT Token 보내기 (HeaderKey값 + createToken)
+        httpServletResponse.addHeader(JwtUtil.AUTHORIZATION_HEADER,jwtUtil.createToken(user.getUsername(), user.getRole()));
 
     }
 

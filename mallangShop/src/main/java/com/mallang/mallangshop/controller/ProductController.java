@@ -4,6 +4,7 @@ import com.mallang.mallangshop.dto.ProductMypriceRequestDto;
 import com.mallang.mallangshop.dto.ProductRequestDto;
 import com.mallang.mallangshop.dto.ProductResponseDto;
 import com.mallang.mallangshop.service.ProductService;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,9 +30,9 @@ public class ProductController {
 
     // 관심상품 조회
     @GetMapping("/products")
-    public List<ProductResponseDto> getProducts() {
+    public List<ProductResponseDto> getProducts(HttpServletRequest httpServletRequest) {
 
-        return productService.getProducts();
+        return productService.getProducts(httpServletRequest);
 
     }
 
