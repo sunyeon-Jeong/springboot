@@ -32,11 +32,40 @@ public class ProductService {
 
     // 관심상품 등록
     @Transactional
-    public ProductResponseDto createProduct(ProductRequestDto productRequestDto) {
+    public ProductResponseDto createProduct(ProductRequestDto productRequestDto, HttpServletRequest httpServletRequest) {
 
-        Product product = productRepository.saveAndFlush(Product.of(productRequestDto));
+        // 1. HTTP Request Header -> JWT Token 가져오기
+        String token = jwtUtil.getToken(httpServletRequest);
+        Claims claims;
 
-        return ProductResponseDto.of(product);
+        // 2. JWT Token 있는경우에만 -> 관심상품 등록 가능
+        if (token != null) {
+
+            // 2-1. JWT Token 검증
+            if (jwtUtil.validateToken(token)) {
+
+                // true -> Token에서 사용자정보 가져오기
+                claims = jwtUtil.getUserInfoFromToken(token);
+
+            } else {
+                throw new IllegalArgumentException("Token Error");
+            }
+
+            // 2-2. Token에서 가져온 사용자정보 -> DB조회
+            User user = userRepository.findByUsername(claims.getSubject()).orElseThrow(
+                    () -> new IllegalArgumentException("사용자가 존재하지 않습니다")
+            );
+
+            // 2-3. 요청받은 DTO -> DB에 저장할 객체생성
+            Product product = productRepository.saveAndFlush(Product.of(productRequestDto, user.getId()));
+
+            return ProductResponseDto.of(product);
+
+        } else {
+
+            return null;
+
+        }
 
     }
 

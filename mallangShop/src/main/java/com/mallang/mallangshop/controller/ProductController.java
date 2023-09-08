@@ -22,9 +22,9 @@ public class ProductController {
 
     // 관심상품 등록
     @PostMapping("/products")
-    public ProductResponseDto createProduct(@RequestBody ProductRequestDto productRequestDto) {
+    public ProductResponseDto createProduct(@RequestBody ProductRequestDto productRequestDto, HttpServletRequest httpServletRequest) {
 
-        return productService.createProduct(productRequestDto);
+        return productService.createProduct(productRequestDto, httpServletRequest);
 
     }
 
