@@ -124,16 +124,43 @@ public class ProductService {
 
     // 관심상품 최저가 등록
     @Transactional
-    public Long updateProduct(Long id, ProductMypriceRequestDto productMypriceRequestDto) {
+    public Long updateProduct(Long id, ProductMypriceRequestDto productMypriceRequestDto, HttpServletRequest httpServletRequest) {
 
-        Product product = productRepository.findById(id).orElseThrow(
-                () -> new NullPointerException("해당 상품은 존재하지 않습니다")
-        );
+        // 1. HTTP Request Header -> JWT Token 가져오기
+        String token = jwtUtil.getToken(httpServletRequest);
+        Claims claims;
 
-        product.update(productMypriceRequestDto);
+        // 2. JWT Token 있는경우에만 -> 관심상품 등록 가능
+        if (token != null) {
 
-        return product.getId();
+            // 2-1. JWT Token 검증
+            if (jwtUtil.validateToken(token)) {
 
+                // true -> Token에서 사용자정보 가져오기
+                claims = jwtUtil.getUserInfoFromToken(token);
+
+            } else {
+                throw new IllegalArgumentException("Token Error");
+            }
+
+            // 2-2. Token에서 가져온 사용자정보 -> DB조회
+            User user = userRepository.findByUsername(claims.getSubject()).orElseThrow(
+                    () -> new IllegalArgumentException("사용자가 존재하지 않습니다")
+            );
+
+            Product product = productRepository.findByIdAndUserId(id, user.getId()).orElseThrow(
+                    () -> new IllegalArgumentException("해당상품은 존재하지 않습니다")
+            );
+
+            product.update(productMypriceRequestDto);
+
+            return product.getId();
+
+        } else {
+
+            return null;
+
+        }
     }
 
     // 관심상품 최저가 업데이트

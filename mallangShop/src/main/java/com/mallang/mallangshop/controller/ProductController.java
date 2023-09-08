@@ -38,9 +38,9 @@ public class ProductController {
 
     // 관심상품 최저가 등록
     @PutMapping("/products/{id}")
-    public Long updateProduct(@PathVariable Long id, @RequestBody ProductMypriceRequestDto productMypriceRequestDto) {
+    public Long updateProduct(@PathVariable Long id, @RequestBody ProductMypriceRequestDto productMypriceRequestDto, HttpServletRequest httpServletRequest) {
 
-        return productService.updateProduct(id, productMypriceRequestDto);
+        return productService.updateProduct(id, productMypriceRequestDto, httpServletRequest);
 
     }
 
