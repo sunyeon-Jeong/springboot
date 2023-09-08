@@ -39,9 +39,9 @@ public class UserController {
     }
 
     // 로그인
-    @ResponseBody
+    @ResponseBody // @RestController X -> 로그인메서드에만 추가
     @PostMapping("/login")
-    public String login(@RequestBody LoginRequestDto loginRequestDto, HttpServletResponse httpServletResponse) {
+    public String login(@RequestBody LoginRequestDto loginRequestDto,HttpServletResponse httpServletResponse) {
 
         userService.login(loginRequestDto, httpServletResponse);
 
