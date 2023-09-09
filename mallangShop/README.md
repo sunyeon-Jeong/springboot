@@ -71,3 +71,20 @@
 | 회원가입    |`POST`| /api/user/signup |POST Form 태그 <br> { <br> &nbsp;&nbsp;"username" : String, <br> &nbsp;&nbsp;"password" : String, <br> &nbsp;&nbsp;"email" : String, <br> &nbsp;&nbsp;"admin" : boolean, <br> &nbsp;&nbsp;"adminToken" : String <br> }| redirect:/api/user/login                                    |
 | 로그인페이지  |`GET`| /api/user/login |-| login.html                                                  |
 | 로그인     |`POST`| /api/user/login|{ <br> &nbsp;&nbsp;"username" : String, <br> &nbsp;&nbsp;"password" : String <br> } | Header <br> Authorization : Bearer \<JWT> <br> <br> success |
+
+## 4 mallangShop 최종 Feature
+
+### 1️⃣서비스기능
+|서비스기능|
+|---|
+|1. 키워드로 상품검색  → 결과 목록으로 보여주기|
+|2. 회원가입|
+|3. 로그인|
+|4. 로그인성공  → Token 발급|
+|5. 로그아웃|
+|6. 로그인 한 회원 → 관심상품 등록/조회/최저가등록 가능|
+|7. ADMIN계정 → 모든상품 조회가능|
+|8. 관심상품 목록 페이징 및 정렬|
+|9. 폴더 생성 및 조회|
+|10. 관심상품 → 폴더추가|
+|11. 폴더 별 관심상품 조회|
