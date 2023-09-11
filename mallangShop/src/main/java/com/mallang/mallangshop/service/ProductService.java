@@ -13,6 +13,10 @@ import com.mallang.mallangshop.repository.UserRepository;
 import io.jsonwebtoken.Claims;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -71,7 +75,15 @@ public class ProductService {
 
     // 관심상품 조회
     @Transactional(readOnly = true)
-    public List<ProductResponseDto> getProducts(HttpServletRequest httpServletRequest) {
+    public Page<Product> getProducts(HttpServletRequest httpServletRequest,
+                                     int page, int size, String sortBy, boolean isAsc) {
+
+        // 페이징
+        Sort.Direction direction = isAsc ? Sort.Direction.ASC : Sort.Direction.DESC;
+
+        Sort sort = Sort.by(direction, sortBy);
+
+        Pageable pageable = PageRequest.of(page, size, sort);
 
         // 1. HTTP Request Header -> JWT Token 가져오기
         String token = jwtUtil.getToken(httpServletRequest);
@@ -99,20 +111,16 @@ public class ProductService {
             UserRoleEnum userRoleEnum = user.getRole();
             System.out.println("role = " + userRoleEnum);
 
-            List<ProductResponseDto> productResponseDtoList = new ArrayList<>();
-            List<Product> productList;
+            Page<Product> productPage;
 
             if (userRoleEnum == UserRoleEnum.USER) {
-                productList = productRepository.findAllByUserId(user.getId());
+                productPage = productRepository.findAllByUserId(user.getId(), pageable);
             } else {
-                productList = productRepository.findAll();
+                productPage = productRepository.findAll(pageable);
             }
 
-            for (Product product : productList) {
-                productResponseDtoList.add(ProductResponseDto.of(product));
-            }
+            return productPage;
 
-            return productResponseDtoList;
 
         } else {
 
