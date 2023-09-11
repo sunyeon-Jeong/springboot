@@ -3,9 +3,11 @@ package com.mallang.mallangshop.controller;
 import com.mallang.mallangshop.dto.ProductMypriceRequestDto;
 import com.mallang.mallangshop.dto.ProductRequestDto;
 import com.mallang.mallangshop.dto.ProductResponseDto;
+import com.mallang.mallangshop.entity.Product;
 import com.mallang.mallangshop.service.ProductService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.*;
@@ -30,9 +32,14 @@ public class ProductController {
 
     // 관심상품 조회
     @GetMapping("/products")
-    public List<ProductResponseDto> getProducts(HttpServletRequest httpServletRequest) {
+    public Page<Product> getProducts(
+            @RequestParam("page") int page, // 조회할 페이지 번호 (1부터 시작)
+            @RequestParam("size") int size, // 한 페이지에 보여줄 개수
+            @RequestParam("sortBy") String sortBy, // 정렬항목
+            @RequestParam("isAsc") boolean isAsc, // 오름차순(True), 내림차순(False)
+            HttpServletRequest httpServletRequest) {
 
-        return productService.getProducts(httpServletRequest);
+        return productService.getProducts(httpServletRequest, page-1, size, sortBy, isAsc);
 
     }
 
