@@ -3,6 +3,7 @@ package com.mallang.mallangshop.service;
 import com.mallang.mallangshop.entity.Folder;
 import com.mallang.mallangshop.entity.User;
 import com.mallang.mallangshop.jwt.JwtUtil;
+import com.mallang.mallangshop.repository.FolderRepository;
 import com.mallang.mallangshop.repository.UserRepository;
 import io.jsonwebtoken.Claims;
 import jakarta.servlet.http.HttpServletRequest;
