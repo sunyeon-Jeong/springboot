@@ -225,7 +225,7 @@ public class ProductService {
             }
 
             // 관심상품 중복확인
-            Optional<Product> overlapFolder = productRepository.findByIdAndFolderList_Id(product.getId(), folder.getId);
+            Optional<Product> overlapFolder = productRepository.findByIdAndFolderList_Id(product.getId(), folder.getId());
 
             if (overlapFolder.isPresent()) {
                 throw new IllegalArgumentException("중복된 폴더입니다");
