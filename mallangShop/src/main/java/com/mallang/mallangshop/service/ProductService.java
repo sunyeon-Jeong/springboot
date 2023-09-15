@@ -24,6 +24,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -219,8 +220,15 @@ public class ProductService {
             // 상품, 폴더 -> 같은 회원 소유인지 확인
             Long loginUserId = user.getId();
 
-            if (! product.getId().equals(loginUserId) || ! folder.getUser().getId().equals(loginUserId)) {
+            if (! product.getUserId().equals(loginUserId) || ! folder.getUser().getId().equals(loginUserId)) {
                 throw new IllegalArgumentException("회원님의 관심상품이 아니거나, 회원님의 폴더가 아닙니다");
+            }
+
+            // 관심상품 중복확인
+            Optional<Product> overlapFolder = productRepository.findByIdAndFolderList_Id(product.getId(), folder.getId());
+
+            if (overlapFolder.isPresent()) {
+                throw new IllegalArgumentException("중복된 폴더입니다");
             }
 
             // 관심상품 -> 폴더추가
