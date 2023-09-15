@@ -4,6 +4,9 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity(name = "users") // 예약어 -> users로 변경
 @Getter
 @NoArgsConstructor
@@ -25,6 +28,9 @@ public class User {
     @Column(nullable = false)
     @Enumerated(value = EnumType.STRING)
     private UserRoleEnum role;
+
+    @OneToMany
+    List<Folder> folders = new ArrayList<>();
 
     // 생성자
     public User(String username, String password, String email, UserRoleEnum role) {
