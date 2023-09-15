@@ -2,6 +2,7 @@ package com.mallang.mallangshop.controller;
 
 import com.mallang.mallangshop.dto.FolderRequestDto;
 import com.mallang.mallangshop.entity.Folder;
+import com.mallang.mallangshop.service.FolderService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,7 +23,7 @@ public class FolderController {
     @PostMapping("/folders")
     public List<Folder> addFolders(@RequestBody FolderRequestDto folderRequestDto, HttpServletRequest httpServletRequest) {
 
-        List<String> folderNames = folderRequestDto.getFolderNameList();
+        List<String> folderNames = folderRequestDto.getFolderNames();
 
         return folderService.addFolders(folderNames, httpServletRequest);
 

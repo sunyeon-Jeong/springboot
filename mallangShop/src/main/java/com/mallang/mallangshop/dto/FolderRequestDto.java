@@ -7,6 +7,6 @@ import java.util.List;
 @Getter
 public class FolderRequestDto {
 
-    List<String> folderNameList;
+    List<String> folderNames;
 
 }

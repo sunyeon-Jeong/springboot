@@ -23,18 +23,11 @@ public class Folder {
     private User user;
 
     // 생성자
-    @Builder
-    private Folder(String name, User user) {
+    public Folder(String name, User user) {
+
         this.name = name;
         this.user = user;
-    }
 
-    // 정적팩토리메서드
-    public static Folder of(String name, User user) {
-        return Folder.builder()
-                .name(name)
-                .user(user)
-                .build();
     }
 
 }

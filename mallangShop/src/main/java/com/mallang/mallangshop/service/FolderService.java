@@ -54,7 +54,7 @@ public class FolderService {
 
             for (String folderName : folderNames) {
 
-                Folder folder = Folder.of(folderName, user);
+                Folder folder = new Folder(folderName, user);
                 folderList.add(folder);
 
             }

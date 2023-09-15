@@ -111,15 +111,15 @@ public class ProductService {
             UserRoleEnum userRoleEnum = user.getRole();
             System.out.println("role = " + userRoleEnum);
 
-            Page<Product> productPage;
+            Page<Product> products;
 
             if (userRoleEnum == UserRoleEnum.USER) {
-                productPage = productRepository.findAllByUserId(user.getId(), pageable);
+                products = productRepository.findAllByUserId(user.getId(), pageable);
             } else {
-                productPage = productRepository.findAll(pageable);
+                products = productRepository.findAll(pageable);
             }
 
-            return productPage;
+            return products;
 
 
         } else {
