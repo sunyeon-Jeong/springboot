@@ -2,9 +2,11 @@ package com.mallang.mallangshop.controller;
 
 import com.mallang.mallangshop.dto.FolderRequestDto;
 import com.mallang.mallangshop.entity.Folder;
+import com.mallang.mallangshop.entity.Product;
 import com.mallang.mallangshop.service.FolderService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -31,6 +33,19 @@ public class FolderController {
     public List<Folder> getFolders(HttpServletRequest httpServletRequest) {
 
         return folderService.getFolders(httpServletRequest);
+
+    }
+
+    // 폴더 별 관심상품 조회
+    @GetMapping("/folders/{folderId}/products")
+    public Page<Product> getProductsInFolder (@PathVariable Long folderId,
+                                              @RequestParam int page,
+                                              @RequestParam int size,
+                                              @RequestParam String sortBy,
+                                              @RequestParam boolean isAsc,
+                                              HttpServletRequest httpServletRequest) {
+
+        return folderService.getProductsInFolder(folderId, page-1, size, sortBy, isAsc, httpServletRequest);
 
     }
 
