@@ -1,13 +1,19 @@
 package com.mallang.mallangshop.service;
 
 import com.mallang.mallangshop.entity.Folder;
+import com.mallang.mallangshop.entity.Product;
 import com.mallang.mallangshop.entity.User;
 import com.mallang.mallangshop.jwt.JwtUtil;
 import com.mallang.mallangshop.repository.FolderRepository;
+import com.mallang.mallangshop.repository.ProductRepository;
 import com.mallang.mallangshop.repository.UserRepository;
 import io.jsonwebtoken.Claims;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,6 +25,8 @@ import java.util.List;
 public class FolderService {
 
     private final FolderRepository folderRepository;
+
+    private final ProductRepository productRepository;
 
     private final UserRepository userRepository;
 
@@ -95,6 +103,45 @@ public class FolderService {
             );
 
             return folderRepository.findAllByUser(user);
+
+        } else {
+
+            return null;
+
+        }
+
+    }
+
+    // 폴더 별 관심상품 조회
+    @Transactional(readOnly = true)
+    public Page<Product> getProductsInFolder(Long folderId, int page, int size, String sortBy, boolean isAsc, HttpServletRequest httpServletRequest) {
+
+        // 페이징처리
+        Sort.Direction direction = isAsc ? Sort.Direction.ASC : Sort.Direction.DESC;
+
+        Sort sort = Sort.by(direction, sortBy);
+
+        Pageable pageable = PageRequest.of(page, size, sort);
+
+        // JWT Token
+        String token = jwtUtil.getToken(httpServletRequest);
+        Claims claims;
+
+        // JWT Token 유효성검사
+        if (token != null) {
+
+            if (jwtUtil.validateToken(token)) {
+                claims = jwtUtil.getUserInfoFromToken(token);
+            } else {
+                throw new IllegalArgumentException("Token Error");
+            }
+
+            // 사용자 유효성검사
+            User user = userRepository.findByUsername(claims.getSubject()).orElseThrow(
+                    () -> new IllegalArgumentException("사용자가 존재하지 않습니다")
+            );
+
+            return productRepository.findAllByUserIdAndFolderList_Id(user.getId(), folderId, pageable);
 
         } else {
 
