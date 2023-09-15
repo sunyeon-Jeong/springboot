@@ -116,3 +116,11 @@
 - 관심상품 등록 시점 → 어느 폴더에도 저장 X
 - 관심상품 별, 기 생성된 폴더 선택해 추가가능
 - Folder와 Product → M : N 관계
+
+### 4️⃣ API 명세서 - Folder(폴더 별 관심상품 조회)
+|기능|Method|URL|Request|Response|
+|---|---|---|---|---|
+|폴더 별 관심상품 조회|`GET`|api/folders/{folderId}/products|{folderId} : 조회를 원하는 폴더 Id|Page<Product>|
+- 폴더 별 관심상품 조회가능
+  - '폴더별' : 폴더 별 저장된 관심상품 조회가능
+  - '전체' : 폴더와 상관없이 전체 관심상품 조회가능
