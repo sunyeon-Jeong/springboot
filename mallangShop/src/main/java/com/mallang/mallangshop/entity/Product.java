@@ -9,8 +9,11 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
-@Getter @Setter
+@Getter
 @NoArgsConstructor
 public class Product extends Timestamped {
 
@@ -36,6 +39,9 @@ public class Product extends Timestamped {
 
     @Column(nullable = false)
     private Long userId;
+
+    @ManyToMany
+    private List<Folder> folderList = new ArrayList<>();
 
     // 생성자
     @Builder
@@ -67,6 +73,11 @@ public class Product extends Timestamped {
     // 관심상품 최저가 업데이트
     public void updateLprice(ItemDto itemDto) {
         this.lprice = itemDto.getLprice();
+    }
+
+    // 관심상품에 폴더추가
+    public void addFolder(Folder folder) {
+        this.folderList.add(folder);
     }
 
 }
