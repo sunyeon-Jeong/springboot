@@ -58,12 +58,19 @@ public class FolderService {
                     () -> new IllegalArgumentException("사용자가 존재하지 않습니다")
             );
 
+            // 폴더명 중복검사
+            List<Folder> existFolderList = folderRepository.findAllByUserAndNameIn(user, folderNames);
+
             List<Folder> folderList = new ArrayList<>();
 
             for (String folderName : folderNames) {
 
-                Folder folder = new Folder(folderName, user);
-                folderList.add(folder);
+                if (! isExistFolderName(folderName, existFolderList)) {
+
+                    Folder folder = new Folder(folderName, user);
+                    folderList.add(folder);
+
+                }
 
             }
 
@@ -141,6 +148,10 @@ public class FolderService {
                     () -> new IllegalArgumentException("사용자가 존재하지 않습니다")
             );
 
+            System.out.println("FolderService.getProductsInFolder");
+            System.out.println("folderId = " + folderId);
+            System.out.println("user = " + user.getId());
+
             return productRepository.findAllByUserIdAndFolderList_Id(user.getId(), folderId, pageable);
 
         } else {
@@ -148,6 +159,21 @@ public class FolderService {
             return null;
 
         }
+
+    }
+
+    // 폴더명 중복검사
+    private boolean isExistFolderName(String folderName, List<Folder> existFolderList) {
+
+        for (Folder existFolder : existFolderList) {
+
+            if (existFolder.getName().equals(folderName)) {
+                return true;
+            }
+
+        }
+
+        return false;
 
     }
 
