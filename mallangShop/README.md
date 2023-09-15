@@ -98,8 +98,21 @@
 |관심상품 조회|`GET`|/api/products?sortBy=String&isAsc=boolean&size=int&page=int| Header <br> Authorization : Bearer <JWT\>                                                                                                                                                            | Page<Product\>                                                                                                                                                                                                   |
 |관심상품 최저가 등록|`PUT`|/api/products/{id}| Header <br> Authorization : Bearer <JWT\> <br> <br> { <br> &nbsp;&nbsp;"myprice" : int <br> }                                                                                                        | id                                                                                                                                                                                                               |
 
-### 3️⃣ API 명세서 - Folder
+### 3️⃣ API 명세서 - Folder(폴더생성 및 조회)
 |기능|Method| URL         |Request|Response|
 |---|---|-------------|---|---|
-|폴더 생성|`POST`| api/folders |{ <br> &nbsp;&nbsp;folderNames : [String, •••] <br> }|[String, •••]|
+|폴더 생성|`POST`| api/folders |{ <br> &nbsp;&nbsp;"folderNames" : [String, •••] <br> }|[String, •••]|
 |폴더 조회|`GET`|api/user-folder|-|index.html <br> model 추가 → folders|
+- 회원 별 폴더 추가가능
+- 폴더 추가 시, 1 ~ N개 한번에 추가가능
+- 회원 별 저장한 폴더 조회기능
+
+### 4️⃣ API 명세서 - Folder(관심상품에 폴더추가기능)
+|기능|Method|URL|Request| Response                                                                                                                                                                                                                                                                                                                                                                                                                                |
+|---|---|---|---|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+|폴더 전체 조회|`GET`|api/folders|-| [ <br> { <br> &nbsp;&nbsp;"id" : int, <br> &nbsp;&nbsp;"name" : String, <br> &nbsp;&nbsp;"user" : { <br> &nbsp;&nbsp;&nbsp;&nbsp;"id" : int, <br> &nbsp;&nbsp;&nbsp;&nbsp;"username" : String, <br> &nbsp;&nbsp;&nbsp;&nbsp;"password" : String, <br> &nbsp;&nbsp;&nbsp;&nbsp;"email" : String, <br> &nbsp;&nbsp;&nbsp;&nbsp; "role" : String, <br> &nbsp;&nbsp;&nbsp;&nbsp; "folders" : [] <br> &nbsp;&nbsp; } <br> }, <br> ••• <br> ] |
+|폴더 추가|`POST`|api/products/{productId}/folder|{productId} : 관심상품 Id <br> <br> [Form 형태] <br> folderId : 추가할 폴더 Id|폴더가 추가 된 관심상품 Id|
+- 관심상품에 폴더 0 ~ N개 설정가능
+- 관심상품 등록 시점 → 어느 폴더에도 저장 X
+- 관심상품 별, 기 생성된 폴더 선택해 추가가능
+- Folder와 Product → M : N 관계
