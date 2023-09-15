@@ -98,3 +98,8 @@
 |관심상품 조회|`GET`|/api/products?sortBy=String&isAsc=boolean&size=int&page=int| Header <br> Authorization : Bearer <JWT\>                                                                                                                                                            | Page<Product\>                                                                                                                                                                                                   |
 |관심상품 최저가 등록|`PUT`|/api/products/{id}| Header <br> Authorization : Bearer <JWT\> <br> <br> { <br> &nbsp;&nbsp;"myprice" : int <br> }                                                                                                        | id                                                                                                                                                                                                               |
 
+### 3️⃣ API 명세서 - Folder
+|기능|Method| URL         |Request|Response|
+|---|---|-------------|---|---|
+|폴더 생성|`POST`| api/folders |{ <br> &nbsp;&nbsp;folderNames : [String, •••] <br> }|[String, •••]|
+|폴더 조회|`GET`|api/user-folder|-|index.html <br> model 추가 → folders|
