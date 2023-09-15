@@ -220,7 +220,7 @@ public class ProductService {
             // 상품, 폴더 -> 같은 회원 소유인지 확인
             Long loginUserId = user.getId();
 
-            if (! product.getId().equals(loginUserId) || ! folder.getUser().getId().equals(loginUserId)) {
+            if (! product.getUserId().equals(loginUserId) || ! folder.getUser().getId().equals(loginUserId)) {
                 throw new IllegalArgumentException("회원님의 관심상품이 아니거나, 회원님의 폴더가 아닙니다");
             }
 
