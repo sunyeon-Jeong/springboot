@@ -51,4 +51,14 @@ public class ProductController {
 
     }
 
+    // 관심상품에 폴더추가
+    @PostMapping("products/{productId}/folder")
+    public Long addFolder(@PathVariable Long productId, @RequestParam Long folderId, HttpServletRequest httpServletRequest) {
+
+        Product product = productService.addFolder(productId, folderId, httpServletRequest);
+
+        return product.getId();
+
+    }
+
 }
