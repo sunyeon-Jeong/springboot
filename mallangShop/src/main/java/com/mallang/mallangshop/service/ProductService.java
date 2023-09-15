@@ -3,11 +3,13 @@ package com.mallang.mallangshop.service;
 import com.mallang.mallangshop.dto.ProductMypriceRequestDto;
 import com.mallang.mallangshop.dto.ProductRequestDto;
 import com.mallang.mallangshop.dto.ProductResponseDto;
+import com.mallang.mallangshop.entity.Folder;
 import com.mallang.mallangshop.entity.Product;
 import com.mallang.mallangshop.entity.User;
 import com.mallang.mallangshop.entity.UserRoleEnum;
 import com.mallang.mallangshop.jwt.JwtUtil;
 import com.mallang.mallangshop.naver.dto.ItemDto;
+import com.mallang.mallangshop.repository.FolderRepository;
 import com.mallang.mallangshop.repository.ProductRepository;
 import com.mallang.mallangshop.repository.UserRepository;
 import io.jsonwebtoken.Claims;
@@ -31,6 +33,8 @@ public class ProductService {
     private final ProductRepository productRepository;
 
     private final UserRepository userRepository;
+
+    private final FolderRepository folderRepository;
 
     private final JwtUtil jwtUtil;
 
@@ -172,6 +176,7 @@ public class ProductService {
     }
 
     // 관심상품 최저가 업데이트
+    @Transactional
     public void updateBySearch(Long id, ItemDto itemDto) {
 
         Product product = productRepository.findById(id).orElseThrow(
@@ -180,6 +185,54 @@ public class ProductService {
 
         // Product Entity method 실행
         product.updateLprice(itemDto);
+
+    }
+
+    // 관심상품에 폴더추가
+    @Transactional
+    public Product addFolder(Long productId, Long folderId, HttpServletRequest httpServletRequest) {
+
+        String token = jwtUtil.getToken(httpServletRequest);
+        Claims claims;
+
+        if (token != null) {
+
+            if (jwtUtil.validateToken(token)) {
+                claims = jwtUtil.getUserInfoFromToken(token);
+            } else {
+                throw new IllegalArgumentException("Token Error");
+            }
+
+            // 사용자 유효성검사
+            User user = userRepository.findByUsername(claims.getSubject()).orElseThrow(
+                    () -> new IllegalArgumentException("사용자가 존재하지 않습니다")
+            );
+
+            // 상품 유효성검사
+            Product product = productRepository.findById(productId)
+                    .orElseThrow( () -> new NullPointerException("해당 상품 아이디가 존재하지 않습니다") );
+
+            // 폴더 유효성검사
+            Folder folder = folderRepository.findById(folderId)
+                    .orElseThrow( () -> new NullPointerException("해당 폴더 아이디가 존재하지 않습니다") );
+
+            // 상품, 폴더 -> 같은 회원 소유인지 확인
+            Long loginUserId = user.getId();
+
+            if (! product.getId().equals(loginUserId) || ! folder.getUser().getId().equals(loginUserId)) {
+                throw new IllegalArgumentException("회원님의 관심상품이 아니거나, 회원님의 폴더가 아닙니다");
+            }
+
+            // 관심상품 -> 폴더추가
+            product.addFolder(folder);
+
+            return product;
+
+        } else {
+
+            return null;
+
+        }
 
     }
 
