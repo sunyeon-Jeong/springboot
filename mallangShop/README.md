@@ -1,6 +1,6 @@
 # 🐰 mallangShop
 
-[📍 Velog 바로가기](https://velog.io/@mallang/SpringBoot-mallangShop)
+[📍 Velog 바로가기](https://velog.io/@mallang)
 
 ## 1 mallangShop 베타버전 Refactoring 
 
