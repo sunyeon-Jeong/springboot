@@ -13,7 +13,7 @@
 |**mallangMEMO**|말랑메모장(CRUD)|
 |**mallangLOG**|말랑블로그(CRUD)|
 |**mallangShopBeta**|말랑샵베타버전(NaverAPI, 절차적프로그래밍)|
-|**mallangShop**|말랑샵(베타버전 Refactoring, 회원가입, 로그인&로그아웃, JWT(인가), 페이징)|
+|**mallangShop**|말랑샵(베타버전 Refactoring, 회원가입, 로그인&로그아웃, JWT(인가), 페이징, 중복처리)|
 
 ### 3️⃣ Contect
 💌 Blog (https://velog.io/@mallang)
