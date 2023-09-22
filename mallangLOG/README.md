@@ -41,11 +41,22 @@
 |:---:|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 |**회원가입**| - 회원명, 비밀번호 Client에서 전달받기 <br> - username : 4 ~ 10자, 알파벳소문자(a ~ z), 숫자(0 ~ 9) 구성 <br> - password : 8 ~ 15자, 알파벳대소문자(a ~ z, A ~ Z), 숫자(0 ~ 9) 구성 <br> - 회원 DB 중복확인 후, 저장 <br> - 회원가입 성공 시, Client로 성공메시지 + 상태코드 반환 |
 |**로그인**| - 회원명, 비밀번호 Client에서 전달받기  <br> - 회원 DB에서 username을 사용해 조회 → password 유효성검사 <br> - 로그인성공 → username과 JWT 통해 Token 발급 <br> - Token → Response Header에 추가, 성공메시지 + 상태코드 Client 반환                                   |
-|**전체게시글 목록조회**| - 제목, 회원명, 작성내용, 작성날짜 조회 <br> - 작성날짜 기준 내림차순 정렬                                                                                                                                                                   |
 |**게시글 작성**| - Client Token 유효성검사 → 게시글작성 가능 <br> - 제목, 회원명, 작성내용 저장 <br> - 저장된게시글 Client 반환                                                                                                                                   |
+|**전체게시글 목록조회**| - 제목, 회원명, 작성내용, 작성날짜 조회 <br> - 작성날짜 기준 내림차순 정렬                                                                                                                                                                   |
 |**선택한게시글 조회**| - 선택한게시글 제목, 회원명, 작성날짜, 작성내용 조회                                                                                                                                                                                   |
 |**선택한게시글 수정**| - 수정요청 시, Client Token 유효성검사 + 동일 회원일 경우에만 게시글 수정가능 <br> - 제목, 작성내용 수정 <br> - 수정된게시글 Client 반환                                                                                                                    |
 |**선택한게시글 삭제**| - 삭제요청 시, Client Token 유효성검사 + 동일 회원일 경우에만 게시글 삭제가능 <br> - 성공메시지 + 상태코드 Client 반환                                                                                                                                 |
 
 ### 2️⃣ ERD
 ![ERD_mallangLOG(Level2).png](ERD_mallangLOG%28Level2%29.png)
+
+### 3️⃣ API 명세서
+|기능| URL          |Method|RequestHeader|Request| ResponseHeader               |Response|
+|---|--------------|---|---|---|------------------------------|---|
+|회원가입| /auth/signup |`POST`|-|{ <br> &nbsp;&nbsp;"username" : String, <br> &nbsp;&nbsp;"password" : String <br> }| -                            |{ <br> &nbsp;&nbsp;"status" : 200, <br> &nbsp;&nbsp;"message" : "You have successfully signed up" <br> }|
+|로그인| /auth/login  |`POST`|-|{ <br> &nbsp;&nbsp;"username" : String, <br> &nbsp;&nbsp;"password" : String <br> }| Authorization: Bearer \<JWT> |
+|게시글작성| /post        |`POST`|Authorization: Bearer \<JWT>|{ <br> &nbsp;&nbsp;"title" : String, <br> &nbsp;&nbsp;"content" : String <br> }|-|{ <br> &nbsp;&nbsp;"id" : Long, <br> &nbsp;&nbsp;"username" : String, <br> &nbsp;&nbsp;"title" : String, <br> &nbsp;&nbsp;"content" : String, <br> &nbsp;&nbsp;"createAt" : String, <br> &nbsp;&nbsp;"modifiedAt" : String <br> }|
+|전체게시글목록조회|/posts|`GET`|-|-|-|[ <br> { <br> &nbsp;&nbsp;"id" : Long, <br> &nbsp;&nbsp;"username" : String, <br> &nbsp;&nbsp;"title" : String, <br> &nbsp;&nbsp; "content" : String, <br> &nbsp;&nbsp;"createdAt" : String, <br> &nbsp;&nbsp;"modifiedAt" : String <br> }, <br> { <br> &nbsp;&nbsp;"id" : Long, <br> &nbsp;&nbsp;"username" : String, <br> &nbsp;&nbsp;"title" : String, <br> &nbsp;&nbsp; "content" : String, <br> &nbsp;&nbsp;"createdAt" : String, <br> &nbsp;&nbsp;"modifiedAt" : String <br> }, ••• <br> ]|
+|선택한게시글조회|/post/{post-id}|`GET`|-|-|-|{ <br> &nbsp;&nbsp;"id" : Long, <br> &nbsp;&nbsp;"username" : String, <br> &nbsp;&nbsp;"title" : String, <br> &nbsp;&nbsp; "content" : String, <br> &nbsp;&nbsp;"createdAt" : String, <br> &nbsp;&nbsp;"modifiedAt" : String <br> }|
+|선택한게시글수정|/post/{post-id}|`PUT`|Authorization: Bearer \<JWT>|{ <br> &nbsp;&nbsp;"title" : String, <br> &nbsp;&nbsp;"content" : String <br> }|-|{ <br> &nbsp;&nbsp;"id" : Long, <br> &nbsp;&nbsp;"username" : String, <br> &nbsp;&nbsp;"title" : String, <br> &nbsp;&nbsp; "content" : String, <br> &nbsp;&nbsp;"createdAt" : String, <br> &nbsp;&nbsp;"modifiedAt" : String <br> }|
+|선택한게시글삭제|/post/{post-id}|`DELETE`|Authorization: Bearer \<JWT>|-|-|{ <br> &nbsp;&nbsp;"status" : 200, <br> &nbsp;&nbsp;"message" : "Your post has been deleted successfully" <br> }|
