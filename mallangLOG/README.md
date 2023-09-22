@@ -46,3 +46,6 @@
 |**선택한게시글 조회**| - 선택한게시글 제목, 회원명, 작성날짜, 작성내용 조회                                                                                                                                                                                   |
 |**선택한게시글 수정**| - 수정요청 시, Client Token 유효성검사 + 동일 회원일 경우에만 게시글 수정가능 <br> - 제목, 작성내용 수정 <br> - 수정된게시글 Client 반환                                                                                                                    |
 |**선택한게시글 삭제**| - 삭제요청 시, Client Token 유효성검사 + 동일 회원일 경우에만 게시글 삭제가능 <br> - 성공메시지 + 상태코드 Client 반환                                                                                                                                 |
+
+### 2️⃣ ERD
+![ERD_mallangLOG(Level2).png](..%2F..%2F..%2Fdevelope%2FArchitecture%2FERD_mallangLOG.png)
