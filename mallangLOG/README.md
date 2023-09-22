@@ -33,7 +33,7 @@
 - JDK : openjdk-19
 - Java : 17
 - SpringBoot : 3.1.2
-
+---
 # mallangLOG(Level2)
 
 ### 1️⃣ 서비스 요구사항
