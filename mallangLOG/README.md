@@ -48,4 +48,4 @@
 |**선택한게시글 삭제**| - 삭제요청 시, Client Token 유효성검사 + 동일 회원일 경우에만 게시글 삭제가능 <br> - 성공메시지 + 상태코드 Client 반환                                                                                                                                 |
 
 ### 2️⃣ ERD
-![ERD_mallangLOG(Level2).png](..%2F..%2F..%2Fdevelope%2FArchitecture%2FERD_mallangLOG.png)
+![ERD_mallangLOG(Level2).png](ERD_mallangLOG%28Level2%29.png)
