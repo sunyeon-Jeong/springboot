@@ -1,5 +1,6 @@
 package com.mallang.mallanglog.jwt;
 
+import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
 import jakarta.annotation.PostConstruct;
@@ -12,6 +13,7 @@ import org.springframework.util.StringUtils;
 
 import java.security.Key;
 import java.util.Base64;
+import java.util.Date;
 
 @Slf4j
 @Component
@@ -64,6 +66,22 @@ public class JwtUtil {
         }
 
         return null;
+
+    }
+
+
+    /* 2. JWT Token 생성 */
+    public String createToken(String username) {
+
+        Date date = new Date();
+
+        return BEARER_PREFIX +
+                Jwts.builder()
+                        .setSubject(username)
+                        .setExpiration(new Date(date.getTime() + TOKEN_TIME))
+                        .setIssuedAt(date)
+                        .signWith(key, signatureAlgorithm)
+                        .compact();
 
     }
 
