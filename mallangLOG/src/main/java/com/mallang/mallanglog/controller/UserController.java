@@ -22,9 +22,7 @@ public class UserController {
     @PostMapping("/signup")
     public ResponseEntity<StatusMessageResponseDto> signup(@Valid @RequestBody SignupRequestDto signupRequestDto) {
 
-        userService.signup(signupRequestDto);
-
-        return ResponseEntity.ok(StatusMessageResponseDto.of(200, "You have successfully signed up"));
+        return userService.signup(signupRequestDto);
 
     }
 
