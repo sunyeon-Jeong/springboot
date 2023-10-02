@@ -21,18 +21,25 @@ public class Post extends Timestamped {
     @Column(nullable = false)
     private String content;
 
+    // User Entity -> Post Entity ; 단방향연관관계
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "userId")
+    private User user;
+
     // Client Request 값 -> Dto에서 받아와서 -> 덮어씌움
     @Builder // 빌더패턴 : 생성자를 통해 값을 받음 (-> 정적팩토리메서드)
-    private Post(String title, String content) {
+    private Post(String title, String content, User user) {
         this.title = title;
         this.content = content;
+        this.user = user;
     }
 
     // 정적팩토리메서드
-    public static Post of(PostRequestDto postRequestDto) {
+    public static Post of(PostRequestDto postRequestDto, User user) {
         return Post.builder()
                 .title(postRequestDto.getTitle())
                 .content(postRequestDto.getContent())
+                .user(user)
                 .build();
     }
 
