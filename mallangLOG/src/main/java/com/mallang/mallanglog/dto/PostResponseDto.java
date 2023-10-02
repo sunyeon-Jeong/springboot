@@ -40,7 +40,7 @@ public class PostResponseDto {
         return PostResponseDto.builder()
                 .id(post.getId())
                 .title(post.getTitle())
-                .username(post.getUsername())
+                .username(post.getUser().getUsername())
                 .content(post.getContent())
                 .createdAt(post.getCreatedAt())
                 .modifiedAt(post.getModifiedAt())

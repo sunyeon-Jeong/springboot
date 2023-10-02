@@ -23,7 +23,7 @@ public class Post extends Timestamped {
 
     // User Entity -> Post Entity ; 단방향연관관계
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "userId")
+    @JoinColumn(name = "user_Id")
     private User user;
 
     // Client Request 값 -> Dto에서 받아와서 -> 덮어씌움
