@@ -1,10 +1,12 @@
 package com.mallang.mallanglog.service;
 
+import com.mallang.mallanglog.dto.LoginRequestDto;
 import com.mallang.mallanglog.dto.SignupRequestDto;
 import com.mallang.mallanglog.dto.StatusMessageResponseDto;
 import com.mallang.mallanglog.entity.User;
 import com.mallang.mallanglog.jwt.JwtUtil;
 import com.mallang.mallanglog.repository.UserRepository;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -43,6 +45,33 @@ public class UserService {
 
         // 회원가입 성공 시, Client로 성공메시지 + 상태코드 반환
         return ResponseEntity.ok(StatusMessageResponseDto.of(200, "You have successfully signed up"));
+
+    }
+
+    // 로그인
+    @Transactional(readOnly = true)
+    public ResponseEntity<StatusMessageResponseDto> login(LoginRequestDto loginRequestDto,
+                                                          HttpServletResponse httpServletResponse) {
+
+        // id/pw 가져오기
+        String username = loginRequestDto.getUsername();
+        String password = loginRequestDto.getPassword();
+
+        // 회원유효성검사
+        User user = userRepository.findByUsername(username).orElseThrow(
+                () -> new IllegalArgumentException("This account does not exist")
+        );
+
+        // 비밀번호유효성검사
+        if (! user.getPassword().equals(password)) {
+            throw new IllegalArgumentException("This password is invalid");
+        }
+
+        // 로그인성공 -> ResponseHeader에 JWT Token 보냄
+        httpServletResponse.addHeader(JwtUtil.AUTHORIZATION_HEADER, jwtUtil.createToken(user.getUsername()));
+
+        // 로그인 성공 시, Client로 성공메시지 + 상태코드 반환
+        return ResponseEntity.ok(StatusMessageResponseDto.of(200, "You have successfully logged in"));
 
     }
 
