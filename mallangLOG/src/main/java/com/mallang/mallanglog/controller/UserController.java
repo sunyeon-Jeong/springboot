@@ -1,8 +1,10 @@
 package com.mallang.mallanglog.controller;
 
+import com.mallang.mallanglog.dto.LoginRequestDto;
 import com.mallang.mallanglog.dto.SignupRequestDto;
 import com.mallang.mallanglog.dto.StatusMessageResponseDto;
 import com.mallang.mallanglog.service.UserService;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +25,15 @@ public class UserController {
     public ResponseEntity<StatusMessageResponseDto> signup(@Valid @RequestBody SignupRequestDto signupRequestDto) {
 
         return userService.signup(signupRequestDto);
+
+    }
+
+    // 로그인
+    @PostMapping("/login")
+    public ResponseEntity<StatusMessageResponseDto> login(@RequestBody LoginRequestDto loginRequestDto,
+                                                          HttpServletResponse httpServletResponse) {
+
+        return userService.login(loginRequestDto, httpServletResponse);
 
     }
 
