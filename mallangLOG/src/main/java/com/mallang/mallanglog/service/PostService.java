@@ -108,23 +108,52 @@ public class PostService {
 
     // Post 수정
     @Transactional
-    public PostResponseDto updatePost(Long postId, PostRequestDto postRequestDto) {
+    public PostResponseDto updatePost(Long postId, PostRequestDto postRequestDto,
+                                      HttpServletRequest httpServletRequest) {
 
-        // Entity 객체 생성 -> Repository에서 id로 불러옴 -> 예외처리
-        Post updatePost = postRepository.findById(postId).orElseThrow(
-                () -> new IllegalStateException("The Post does not exist")
-        );
+        // 1. HTTP Request Header -> JWT Token 가져오기
+        String token = jwtUtil.getToken(httpServletRequest);
+        Claims claims;
 
-        // 비밀번호 유효성검사
-        if (! postRequestDto.getPassword().equals(updatePost.getPassword())) {
-            throw new IllegalStateException("Password is incorrect");
+        // 2. JWT Token 유효 -> Post 수정 가능
+        if (token != null) {
+
+            // 2-1. JWT Token 검증
+            if (jwtUtil.validateToken(token)) {
+
+                // JWT Token 에서 사용자정보 가져오기
+                claims = jwtUtil.getUserInfoFromToken(token);
+
+            } else {
+                throw new IllegalArgumentException("Token Error");
+            }
+
+            // 2-2. User 유효성검사
+            User user = userRepository.findByUsername(claims.getSubject()).orElseThrow(
+                    () -> new IllegalArgumentException("This account does not exist")
+            );
+
+            // 2-3. Post 유효성검사
+            Post updatePost = postRepository.findById(postId).orElseThrow(
+                    () -> new IllegalArgumentException("The Post does not exist")
+            );
+
+            // 2-4. 회원소유 유효성검사
+            if (! updatePost.getUser().getUsername().equals(user.getUsername())) {
+                throw new IllegalArgumentException("You are not authorized to update this post");
+            }
+
+            // 2-5. Post 수정
+            updatePost.update(postRequestDto);
+
+            // 2-6. update 된 Post 반환
+            return PostResponseDto.of(updatePost);
+
+        } else {
+
+            return null;
+
         }
-
-        // RequestDto -> 불러온 Entity에 덮어씌움
-        updatePost.update(postRequestDto);
-
-        // 수정이 끝난 불러온 Entity 객체 -> ResponseDto 생성자 초기화 -> Client 반환
-        return PostResponseDto.of(updatePost);
 
     }
 
