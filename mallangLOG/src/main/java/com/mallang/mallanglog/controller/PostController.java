@@ -2,9 +2,11 @@ package com.mallang.mallanglog.controller;
 
 import com.mallang.mallanglog.dto.PostRequestDto;
 import com.mallang.mallanglog.dto.PostResponseDto;
+import com.mallang.mallanglog.dto.StatusMessageResponseDto;
 import com.mallang.mallanglog.service.PostService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -53,10 +55,11 @@ public class PostController {
 
     // Post 삭제
     @DeleteMapping("/post/{post-id}")
-    public Map<Integer, String> deletePost(@PathVariable(name="post-id") Long postId,
-                                          @RequestBody PostRequestDto postRequestDto) {
+    public ResponseEntity<StatusMessageResponseDto> deletePost(@PathVariable(name="post-id") Long postId,
+                                                               @RequestBody PostRequestDto postRequestDto,
+                                                               HttpServletRequest httpServletRequest) {
 
-        return postService.deletePost(postId, postRequestDto);
+        return postService.deletePost(postId, postRequestDto, httpServletRequest);
 
     }
 
