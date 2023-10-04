@@ -44,9 +44,10 @@ public class PostController {
     // Post 수정
     @PutMapping("/post/{post-id}")
     public PostResponseDto updatePost(@PathVariable(name="post-id") Long postId,
-                                      @RequestBody PostRequestDto postRequestDto) {
+                                      @RequestBody PostRequestDto postRequestDto,
+                                      HttpServletRequest httpServletRequest) {
 
-        return postService.updatePost(postId, postRequestDto);
+        return postService.updatePost(postId, postRequestDto, httpServletRequest);
 
     }
 
