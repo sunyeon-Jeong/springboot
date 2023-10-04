@@ -2,6 +2,7 @@ package com.mallang.mallanglog.service;
 
 import com.mallang.mallanglog.dto.PostRequestDto;
 import com.mallang.mallanglog.dto.PostResponseDto;
+import com.mallang.mallanglog.dto.StatusMessageResponseDto;
 import com.mallang.mallanglog.entity.Post;
 import com.mallang.mallanglog.entity.User;
 import com.mallang.mallanglog.jwt.JwtUtil;
@@ -10,6 +11,7 @@ import com.mallang.mallanglog.repository.UserRepository;
 import io.jsonwebtoken.Claims;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -139,7 +141,7 @@ public class PostService {
             );
 
             // 2-4. 회원소유 유효성검사
-            if (! updatePost.getUser().getUsername().equals(user.getUsername())) {
+            if (!updatePost.getUser().getUsername().equals(user.getUsername())) {
                 throw new IllegalArgumentException("You are not authorized to update this post");
             }
 
@@ -159,24 +161,51 @@ public class PostService {
 
     // Post 삭제
     @Transactional
-    public Map<Integer, String> deletePost(Long postId, PostRequestDto postRequestDto) {
+    public ResponseEntity<StatusMessageResponseDto> deletePost(Long postId,
+                                                               HttpServletRequest httpServletRequest) {
 
-        // HashMap<key : value> -> 비밀번호 유효성 검사 후, 상태메시지 반환
-        Map<Integer, String> statusMessage = new HashMap<>();
+        // 1. HTTP Request Header -> JWT Token 가져오기
+        String token = jwtUtil.getToken(httpServletRequest);
+        Claims claims;
 
-        // Entity 객체 생성 -> Repository에서 id로 불러옴 -> 예외처리
-        Post deletePost = postRepository.findById(postId).orElseThrow(
-                () -> new IllegalStateException("The Post does not exist")
-        );
+        // 2. JWT Token 유효 -> Post 수정 가능
+        if (token != null) {
 
-        // 비밀번호 유효성검사 -> 상태메시지 반환
-        if (postRequestDto.getPassword().equals(deletePost.getPassword())) {
-            postRepository.deleteById(postId);
-            statusMessage.put(200, "Deleted Post Successfully");
-            return statusMessage;
+            // 2-1. JWT Token 검증
+            if (jwtUtil.validateToken(token)) {
+
+                // JWT Token 에서 사용자정보 가져오기
+                claims = jwtUtil.getUserInfoFromToken(token);
+
+            } else {
+                throw new IllegalArgumentException("Token Error");
+            }
+
+            // 2-2. User 유효성검사
+            User user = userRepository.findByUsername(claims.getSubject()).orElseThrow(
+                    () -> new IllegalArgumentException("This account does not exist")
+            );
+
+            // 2-3. Post 유효성검사
+            Post deletePost = postRepository.findById(postId).orElseThrow(
+                    () -> new IllegalArgumentException("The Post does not exist")
+            );
+
+            // 2-4. 회원소유 유효성검사
+            if (!deletePost.getUser().getUsername().equals(user.getUsername())) {
+                throw new IllegalArgumentException("You are not authorized to delete this post");
+            }
+
+            // 2-5. Post 삭제
+            postRepository.delete(deletePost);
+
+            // 2-6. Post삭제 성공 시, Client로 성공메시지 + 상태코드 반환
+            return ResponseEntity.ok(StatusMessageResponseDto.of(200, "Your Post has been deleted successfully"));
+
         } else {
-            statusMessage.put(500, "Password is incorrect");
-            return statusMessage;
+
+            return null;
+
         }
 
     }
