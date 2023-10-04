@@ -56,10 +56,9 @@ public class PostController {
     // Post 삭제
     @DeleteMapping("/post/{post-id}")
     public ResponseEntity<StatusMessageResponseDto> deletePost(@PathVariable(name="post-id") Long postId,
-                                                               @RequestBody PostRequestDto postRequestDto,
                                                                HttpServletRequest httpServletRequest) {
 
-        return postService.deletePost(postId, postRequestDto, httpServletRequest);
+        return postService.deletePost(postId, httpServletRequest);
 
     }
 
