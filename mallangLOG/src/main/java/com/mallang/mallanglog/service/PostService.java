@@ -3,7 +3,12 @@ package com.mallang.mallanglog.service;
 import com.mallang.mallanglog.dto.PostRequestDto;
 import com.mallang.mallanglog.dto.PostResponseDto;
 import com.mallang.mallanglog.entity.Post;
+import com.mallang.mallanglog.entity.User;
+import com.mallang.mallanglog.jwt.JwtUtil;
 import com.mallang.mallanglog.repository.PostRepository;
+import com.mallang.mallanglog.repository.UserRepository;
+import io.jsonwebtoken.Claims;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,18 +27,48 @@ public class PostService {
 
     private final PostRepository postRepository;
 
+    private final UserRepository userRepository;
+
+    private final JwtUtil jwtUtil;
+
     // Post 생성
     @Transactional // DB처리 작업 중 오류 -> 모든작업 원상태로 복구
-    public PostResponseDto createPost(PostRequestDto postRequestDto) {
+    public PostResponseDto createPost(PostRequestDto postRequestDto,
+                                      HttpServletRequest httpServletRequest) {
 
-        // Entity 객체 생성 -> 정적팩토리메서드(생성자) 초기화
-        Post post = Post.of(postRequestDto);
+        // 1. HTTP Request Header -> JWT Token 가져오기
+        String token = jwtUtil.getToken(httpServletRequest);
+        Claims claims;
 
-        // 초기화 된 Entity 객체 -> Repository 저장
-        postRepository.save(post);
+        // 2. JWT Token 유효 -> Post 생성 가능
+        if (token != null) {
 
-        // 초기화 된 Entity 객체 -> ResponseDto 생성자에 전달
-        return PostResponseDto.of(post);
+            // 2-1. JWT Token 검증
+            if (jwtUtil.validateToken(token)) {
+
+                // JWT Token 에서 사용자정보 가져오기
+                claims = jwtUtil.getUserInfoFromToken(token);
+
+            } else {
+                throw new IllegalArgumentException("Token Error");
+            }
+
+            // 2-2. Token에서 가져온 사용자 정보 -> DB 조회
+            User user = userRepository.findByUsername(claims.getSubject()).orElseThrow(
+                    () -> new IllegalArgumentException("This account does not exist")
+            );
+
+            // 2-3. 요청받은 DTO -> DB에 저장할 객체생성
+            Post post = postRepository.saveAndFlush(Post.of(postRequestDto, user));
+
+            // 2-4. ResponseDto에 객체담아 반환
+            return PostResponseDto.of(post);
+
+        } else {
+
+            return null;
+
+        }
 
     }
 
