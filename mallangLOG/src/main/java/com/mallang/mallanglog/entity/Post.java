@@ -1,6 +1,6 @@
 package com.mallang.mallanglog.entity;
 
-import com.mallang.mallanglog.dto.PostRequestDto;
+import com.mallang.mallanglog.dto.request.PostRequestDto;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;

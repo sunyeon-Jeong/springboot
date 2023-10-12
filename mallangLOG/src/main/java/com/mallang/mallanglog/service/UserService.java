@@ -1,8 +1,8 @@
 package com.mallang.mallanglog.service;
 
-import com.mallang.mallanglog.dto.LoginRequestDto;
-import com.mallang.mallanglog.dto.SignupRequestDto;
-import com.mallang.mallanglog.dto.StatusMessageResponseDto;
+import com.mallang.mallanglog.dto.request.LoginRequestDto;
+import com.mallang.mallanglog.dto.request.SignupRequestDto;
+import com.mallang.mallanglog.dto.response.StatusMessageResponseDto;
 import com.mallang.mallanglog.entity.User;
 import com.mallang.mallanglog.jwt.JwtUtil;
 import com.mallang.mallanglog.repository.UserRepository;

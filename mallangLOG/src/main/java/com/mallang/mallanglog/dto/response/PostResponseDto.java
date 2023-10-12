@@ -1,4 +1,4 @@
-package com.mallang.mallanglog.dto;
+package com.mallang.mallanglog.dto.response;
 
 import com.mallang.mallanglog.entity.Post;
 import lombok.Builder;

@@ -1,8 +1,8 @@
 package com.mallang.mallanglog.controller;
 
-import com.mallang.mallanglog.dto.LoginRequestDto;
-import com.mallang.mallanglog.dto.SignupRequestDto;
-import com.mallang.mallanglog.dto.StatusMessageResponseDto;
+import com.mallang.mallanglog.dto.request.LoginRequestDto;
+import com.mallang.mallanglog.dto.request.SignupRequestDto;
+import com.mallang.mallanglog.dto.response.StatusMessageResponseDto;
 import com.mallang.mallanglog.service.UserService;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;

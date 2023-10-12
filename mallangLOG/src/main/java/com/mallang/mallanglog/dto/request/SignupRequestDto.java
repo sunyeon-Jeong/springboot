@@ -1,4 +1,4 @@
-package com.mallang.mallanglog.dto;
+package com.mallang.mallanglog.dto.request;
 
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;

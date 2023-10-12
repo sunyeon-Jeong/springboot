@@ -1,8 +1,8 @@
 package com.mallang.mallanglog.controller;
 
-import com.mallang.mallanglog.dto.PostRequestDto;
-import com.mallang.mallanglog.dto.PostResponseDto;
-import com.mallang.mallanglog.dto.StatusMessageResponseDto;
+import com.mallang.mallanglog.dto.request.PostRequestDto;
+import com.mallang.mallanglog.dto.response.PostResponseDto;
+import com.mallang.mallanglog.dto.response.StatusMessageResponseDto;
 import com.mallang.mallanglog.service.PostService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -10,7 +10,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Map;
 
 @RestController // @Controller + @ResponseBody -> JSON형태 데이터반환
 @RequiredArgsConstructor // final, @Notnull 필드 -> 생성자생성
