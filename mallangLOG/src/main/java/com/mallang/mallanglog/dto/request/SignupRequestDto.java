@@ -13,7 +13,7 @@ public class SignupRequestDto {
     private String username;
 
     @Size(min = 8, max = 15, message = "최소 8자, 최대 15자까지 설정 가능합니다")
-    @Pattern(regexp = "[a-zA-Z0-9]*$", message = "알파벳대소문자 및 숫자로만 설정 가능합니다")
+    @Pattern(regexp = "[a-zA-Z0-9\\\\d`~!@#$%^&*()-_=+]*$", message = "알파벳대소문자 및 숫자로만 설정 가능합니다")
     private String password;
 
 }
