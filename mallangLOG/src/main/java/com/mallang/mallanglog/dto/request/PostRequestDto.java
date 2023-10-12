@@ -1,4 +1,4 @@
-package com.mallang.mallanglog.dto;
+package com.mallang.mallanglog.dto.request;
 
 import lombok.Getter;
 
