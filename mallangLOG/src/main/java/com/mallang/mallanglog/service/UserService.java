@@ -4,6 +4,7 @@ import com.mallang.mallanglog.dto.request.LoginRequestDto;
 import com.mallang.mallanglog.dto.request.SignupRequestDto;
 import com.mallang.mallanglog.dto.response.StatusMessageResponseDto;
 import com.mallang.mallanglog.entity.User;
+import com.mallang.mallanglog.entity.UserRoleEnum;
 import com.mallang.mallanglog.jwt.JwtUtil;
 import com.mallang.mallanglog.repository.UserRepository;
 import jakarta.servlet.http.HttpServletResponse;
@@ -22,6 +23,9 @@ public class UserService {
 
     private final JwtUtil jwtUtil;
 
+    // adminToken
+    private static final String ADMIN_TOKEN = "mallang is the best Backend Developer in the world";
+
     // 회원가입
     @Transactional
     public ResponseEntity<StatusMessageResponseDto> signup(SignupRequestDto signupRequestDto) {
@@ -37,8 +41,23 @@ public class UserService {
             throw new IllegalArgumentException("A Duplicate user already exists");
         }
 
+        // 회원권한부여 설계
+        UserRoleEnum userRoleEnum = UserRoleEnum.USER;
+
+        if (signupRequestDto.isAdminValidation()) {
+
+            // adminToken 유효성검사
+            if (!signupRequestDto.getAdminToken().equals(ADMIN_TOKEN)) {
+                throw new IllegalArgumentException("This adminToken is invalid");
+            }
+
+            // adminToken 유효성검사 통과 -> role 변경
+            userRoleEnum = UserRoleEnum.ADMIN;
+
+        }
+
         // 회원정보 -> Entity 초기화
-        User user = User.of(username, password);
+        User user = User.of(username, password, userRoleEnum);
 
         // Entity -> DB 저장
         userRepository.save(user);
@@ -68,7 +87,7 @@ public class UserService {
         }
 
         // 로그인성공 -> ResponseHeader에 JWT Token 보냄
-        httpServletResponse.addHeader(JwtUtil.AUTHORIZATION_HEADER, jwtUtil.createToken(user.getUsername()));
+        httpServletResponse.addHeader(JwtUtil.AUTHORIZATION_HEADER, jwtUtil.createToken(user.getUsername(), user.getRole()));
 
         // 로그인 성공 시, Client로 성공메시지 + 상태코드 반환
         return ResponseEntity.ok(StatusMessageResponseDto.of(200, "You have successfully logged in"));

@@ -1,5 +1,6 @@
 package com.mallang.mallanglog.jwt;
 
+import com.mallang.mallanglog.entity.UserRoleEnum;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import jakarta.annotation.PostConstruct;
@@ -70,13 +71,14 @@ public class JwtUtil {
 
 
     /* 2. JWT Token 생성 */
-    public String createToken(String username) {
+    public String createToken(String username, UserRoleEnum userRoleEnum) {
 
         Date date = new Date();
 
         return BEARER_PREFIX +
                 Jwts.builder()
                         .setSubject(username)
+                        .claim(AUTHORIZATION_KEY, userRoleEnum)
                         .setExpiration(new Date(date.getTime() + TOKEN_TIME))
                         .setIssuedAt(date)
                         .signWith(key, signatureAlgorithm)
