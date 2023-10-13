@@ -16,4 +16,10 @@ public class SignupRequestDto {
     @Pattern(regexp = "[a-zA-Z0-9\\\\d`~!@#$%^&*()-_=+]*$", message = "알파벳대소문자 및 숫자로만 설정 가능합니다")
     private String password;
 
+    // 관리자권한 T / F
+    private boolean adminValidation;
+
+    // 관리자권한 토큰
+    private String adminToken;
+
 }
