@@ -22,6 +22,9 @@ public class UserService {
 
     private final JwtUtil jwtUtil;
 
+    // adminToken
+    private static final String ADMIN_TOKEN = "mallang is the best Backend Developer in the world";
+
     // 회원가입
     @Transactional
     public ResponseEntity<StatusMessageResponseDto> signup(SignupRequestDto signupRequestDto) {
