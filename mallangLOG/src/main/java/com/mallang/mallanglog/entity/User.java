@@ -20,18 +20,24 @@ public class User {
     @Column(nullable = false)
     private String password;
 
+    @Column(nullable = false)
+    @Enumerated(value = EnumType.STRING)
+    private UserRoleEnum role;
+
     // 생성자
     @Builder
-    private User(String username, String password) {
+    private User(String username, String password, UserRoleEnum userRoleEnum) {
         this.username = username;
         this.password = password;
+        this.role = userRoleEnum;
     }
 
     // 정적팩토리메서드
-    public static User of(String username, String password) {
+    public static User of(String username, String password, UserRoleEnum userRoleEnum) {
         return User.builder()
                 .username(username)
                 .password(password)
+                .userRoleEnum(userRoleEnum)
                 .build();
     }
 
