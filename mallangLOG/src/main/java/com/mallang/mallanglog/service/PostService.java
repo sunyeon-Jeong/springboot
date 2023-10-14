@@ -5,6 +5,7 @@ import com.mallang.mallanglog.dto.response.PostResponseDto;
 import com.mallang.mallanglog.dto.response.StatusMessageResponseDto;
 import com.mallang.mallanglog.entity.Post;
 import com.mallang.mallanglog.entity.User;
+import com.mallang.mallanglog.entity.UserRoleEnum;
 import com.mallang.mallanglog.jwt.JwtUtil;
 import com.mallang.mallanglog.repository.PostRepository;
 import com.mallang.mallanglog.repository.UserRepository;
@@ -135,14 +136,22 @@ public class PostService {
                     () -> new IllegalArgumentException("This account does not exist")
             );
 
-            // 2-3. Post 유효성검사
-            Post updatePost = postRepository.findById(postId).orElseThrow(
-                    () -> new IllegalArgumentException("The Post does not exist")
-            );
+            Post updatePost;
 
-            // 2-4. 회원소유 유효성검사
-            if (!updatePost.getUser().getUsername().equals(user.getUsername())) {
-                throw new IllegalArgumentException("You are not authorized to update this post");
+            // 2-3. ADMIN -> postId로 조회해 수정가능
+            if (user.getRole().equals(UserRoleEnum.ADMIN)) {
+
+                updatePost = postRepository.findById(postId).orElseThrow(
+                        () -> new IllegalArgumentException("The Post does not exist")
+                );
+
+            } else {
+
+                // 2-4. USER -> postId + userId 조회해 수정가능
+                updatePost = postRepository.findByIdAndUserId(postId, user.getId()).orElseThrow(
+                        () -> new IllegalArgumentException("The Post does not exist or You are not authorized to update this post")
+                );
+
             }
 
             // 2-5. Post 수정
