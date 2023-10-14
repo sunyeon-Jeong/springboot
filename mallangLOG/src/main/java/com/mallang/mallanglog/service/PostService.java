@@ -195,14 +195,22 @@ public class PostService {
                     () -> new IllegalArgumentException("This account does not exist")
             );
 
-            // 2-3. Post 유효성검사
-            Post deletePost = postRepository.findById(postId).orElseThrow(
-                    () -> new IllegalArgumentException("The Post does not exist")
-            );
+            Post deletePost;
 
-            // 2-4. 회원소유 유효성검사
-            if (!deletePost.getUser().getUsername().equals(user.getUsername())) {
-                throw new IllegalArgumentException("You are not authorized to delete this post");
+            // 2-3. ADMIN -> postId로 조회해 삭제가능
+            if (user.getRole().equals(UserRoleEnum.ADMIN)) {
+
+                deletePost = postRepository.findById(postId).orElseThrow(
+                        () -> new IllegalArgumentException("The Post does not exist")
+                );
+
+            } else {
+
+                // 2-4. USER -> postId + userId 조회해 수정가능
+                deletePost = postRepository.findByIdAndUserId(postId, user.getId()).orElseThrow(
+                        () -> new IllegalArgumentException("The Post does not exist or You are not authorized to delete this post")
+                );
+
             }
 
             // 2-5. Post 삭제
